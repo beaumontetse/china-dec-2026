@@ -6,10 +6,22 @@
 <title>China · Dec 6–19, 2026 · Trip Budget</title>
 <meta name="description" content="Pick your regions, see what the China trip costs, and browse what to do in each.">
 <meta name="theme-color" content="#071526">
+<!-- link previews (iMessage, Slack, etc.) need absolute URLs -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="China · Dec 2026">
+<meta property="og:title" content="China 中国 · 13 days · Dec 6–19, 2026">
+<meta property="og:description" content="Pick your regions, see what the trip costs, and share your plan.">
+<meta property="og:url" content="https://beaumontetse.github.io/china-dec-2026/">
+<meta property="og:image" content="https://beaumontetse.github.io/china-dec-2026/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="China 13 days, over the sandstone pillars of Zhangjiajie">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://beaumontetse.github.io/china-dec-2026/og.jpg">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏂</text></svg>">
 <style>
 :root{--ink:#0b1e33;--deep:#071526;--muted:#c9d8ea;--accent:#38bdf8;--gold:#f5c451;--ok:#34d399;--red:#f87171;--glass:rgba(255,255,255,.08);--line:rgba(255,255,255,.14)}
-*{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+[hidden]{display:none!important}*{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--deep);color:#fff;overflow-x:hidden;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased;padding-bottom:84px}
 button{font:inherit;color:inherit;-webkit-tap-highlight-color:transparent}
 h1{font-size:clamp(48px,10vw,132px);line-height:.92;margin:0;font-weight:900;letter-spacing:-.04em;text-transform:uppercase}
@@ -151,6 +163,7 @@ h2{font-size:clamp(32px,5vw,64px);line-height:1.02;margin:0 0 10px;font-weight:9
 .xc .bd{padding:14px 16px 18px}
 .xc h4{margin:0 0 6px;font-size:18px;font-weight:900}
 .xc p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}
+.xc .eat{position:absolute;z-index:2;left:10px;top:10px;font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:999px;color:var(--ink);background:var(--gold)}
 .xc .tip{display:inline-block;margin-top:10px;font-size:12px;font-weight:800;color:var(--gold)}
 .zh{font-family:"PingFang SC","Hiragino Sans GB","Noto Sans SC","Microsoft YaHei",sans-serif;font-weight:600;letter-spacing:.04em;opacity:.7;margin-left:.45em;font-size:.72em}
 .rc .zh{display:block;margin:3px 0 0;font-size:13px;color:var(--gold);opacity:.9}
@@ -165,7 +178,15 @@ h2{font-size:clamp(32px,5vw,64px);line-height:1.02;margin:0 0 10px;font-weight:9
 .dock .t{font-size:24px;font-weight:900;color:var(--ok);font-variant-numeric:tabular-nums;line-height:1}
 .dock .s{font-size:12px;color:var(--muted);margin-top:3px}
 .dock .s.over{color:var(--red)}
-.dock a{flex:none;text-decoration:none;color:#fff;font-weight:900;font-size:14px;padding:10px 16px;border-radius:999px;background:#ffffff1f;border:1px solid var(--line)}
+.dock .acts{display:flex;gap:8px;flex:none}
+.dock a,.dock button{flex:none;cursor:pointer;text-decoration:none;color:#fff;font-weight:900;font-size:14px;padding:10px 16px;border-radius:999px;background:#ffffff1f;border:1px solid var(--line)}
+.sharebox{margin-top:26px;display:flex;justify-content:flex-end}
+.dock .share{color:var(--ink);border:0;background:linear-gradient(90deg,var(--gold),var(--accent))}
+.modal{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:16px;background:rgba(3,10,20,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.sheet{width:min(640px,100%);max-height:90vh;display:flex;flex-direction:column;gap:12px;padding:22px;border-radius:22px;background:var(--ink);border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.sheet h3{margin:0;font-size:24px;font-weight:900}.sheet p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}
+.sheet textarea{flex:1;min-height:260px;resize:vertical;font:13px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;color:#fff;background:#ffffff0d;border:1px solid var(--line);border-radius:14px;padding:14px}
+.mbtns{display:flex;flex-wrap:wrap;gap:8px}
 footer{padding:36px 0 40px;font-size:13px;color:#ffffff80}
 
 @media (max-width:980px){.picker{grid-template-columns:repeat(3,1fr)}.xgrid{grid-template-columns:1fr 1fr}}
@@ -227,6 +248,7 @@ footer{padding:36px 0 40px;font-size:13px;color:#ffffff80}
     <div class="bar" id="bar"></div>
     <div class="legend" id="legend"></div>
     <div class="cost" id="cost"></div>
+    <div class="sharebox"><button class="addbtn" data-share>Export &amp; share this plan</button></div>
   </div>
 </section>
 
@@ -243,7 +265,14 @@ footer{padding:36px 0 40px;font-size:13px;color:#ffffff80}
 
 <footer><div class="wrap">Prices researched Oct 2026 from airline fare pages, park ticket offices and travel guides. Hotels and domestic legs are ranges, not quotes.</div></footer>
 
-<div class="dock" id="dock"><div><div class="t" id="dt"></div><div class="s" id="ds"></div></div><a href="#build">Edit regions</a></div>
+<div class="dock" id="dock"><div><div class="t" id="dt"></div><div class="s" id="ds"></div></div><div class="acts"><a href="#build">Edit regions</a><button class="share" data-share>Share plan</button></div></div>
+
+<div class="modal" id="modal" hidden><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="mh">
+  <h3 id="mh">Share your plan</h3>
+  <p>Send this to the trip organizer. The link at the bottom opens this page with your exact picks.</p>
+  <textarea id="ptext" readonly></textarea>
+  <div class="mbtns"><button class="addbtn" id="mcopy">Copy</button><button class="addbtn rm" id="mshare">Share…</button><button class="addbtn rm" id="mdl">Download .txt</button><button class="addbtn rm" id="mclose">Close</button></div>
+</div></div>
 
 <script>
 /* ================== EDIT TRIP DATA HERE ==================
@@ -255,14 +284,17 @@ const ORIGINS={
   JFK:{city:"New York",note:"Economy, usually 1 stop (~16–20h)",p:[950,1250,1700]},
 };
 const SHANGHAI={name:"Shanghai",tag:"Home base",emoji:"🌃",ll:[31.23,121.47],
-  sights:[["Shanghai","Shanghai Tower deck, Bund, museums, a water town",[200,450,900]]],
+  sights:[["Shanghai","Jing'an Temple, West Bund museums, Suzhou day trip",[200,450,900]]],
   explore:[
-    ["The Bund","https://en.wikipedia.org/wiki/The_Bund","Colonial-era waterfront facing the Pudong skyline. Go after dark when it all lights up.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/The_Bund_2.jpg/960px-The_Bund_2.jpg"],
-    ["Yu Garden","https://en.wikipedia.org/wiki/Yu_Garden","Ming-dynasty garden of rockeries and zigzag bridges, wrapped in the old-town bazaar.","¥40","https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Shanghai_-_Yu_Garden_-_0035.jpg/960px-Shanghai_-_Yu_Garden_-_0035.jpg"],
-    ["Shanghai Tower","https://en.wikipedia.org/wiki/Shanghai_Tower","China's tallest building. The observation deck sits on the 118th floor.","~¥180","https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/20191114_Shanghai_Tower_%282%29.jpg/960px-20191114_Shanghai_Tower_%282%29.jpg"],
-    ["Zhujiajiao","https://en.wikipedia.org/wiki/Zhujiajiao","Canal water town about an hour out by metro: stone bridges, boats, street snacks.","Free to walk","https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/1_zhujiajiao_2023_aerial.jpg/960px-1_zhujiajiao_2023_aerial.jpg"],
+      ["The Bund","https://en.wikipedia.org/wiki/The_Bund","Colonial-era waterfront facing the Pudong skyline. Come after dark when it all lights up, then take the ¥2 ferry across the Huangpu.","Free · ferry ¥2","https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/The_Bund_2.jpg/960px-The_Bund_2.jpg"],
     ["Former French Concession","https://en.wikipedia.org/wiki/Wukang_Mansion","Plane-tree streets, cafés and the flatiron-shaped Wukang Mansion.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Wukang_Mansion_20251128.jpg/960px-Wukang_Mansion_20251128.jpg"],
-    ["Tianzifang","https://en.wikipedia.org/wiki/Tianzifang","A maze of shikumen lanes turned into shops, galleries and bars.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Shanghai_Tianzifang_%E4%B8%8A%E6%B5%B7%E7%94%B0%E5%AD%90%E5%9D%8A_-_panoramio.jpg/960px-Shanghai_Tianzifang_%E4%B8%8A%E6%B5%B7%E7%94%B0%E5%AD%90%E5%9D%8A_-_panoramio.jpg"],
+      ["Jing'an Temple","https://en.wikipedia.org/wiki/Jing%27an_Temple","A gilded Buddhist temple wedged between glass towers on Nanjing Road. Most striking at dusk.","¥50","https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/2024-Apr_Jing-an_Temple_%E9%9D%99%E5%AE%89%E5%AF%BA_Shanghai_04.jpg/960px-2024-Apr_Jing-an_Temple_%E9%9D%99%E5%AE%89%E5%AF%BA_Shanghai_04.jpg"],
+      ["Shanghai Museum East","https://en.wikipedia.org/wiki/Shanghai_Museum","The museum's huge new Pudong branch, opened 2024: bronzes, jade, ceramics. Reserve online with your passport.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Shanghai_Museum_East_20241201.jpg/960px-Shanghai_Museum_East_20241201.jpg"],
+      ["West Bund","https://en.wikipedia.org/wiki/Long_Museum","A riverside run of art museums in old industrial buildings, including the Long Museum. Good for a long walk.","~¥100 a museum","https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/20251129_Long_Museum_West_Bund_%28II%29.jpg/960px-20251129_Long_Museum_West_Bund_%28II%29.jpg"],
+      ["Suzhou day trip","https://en.wikipedia.org/wiki/Humble_Administrator%27s_Garden","Classical gardens and canals 30 min away by bullet train. Start at the Humble Administrator's Garden.","¥70 + ~¥40 train","https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Humble_Administrator%27s_Garden_Suzhou_November_2017_008.jpg/960px-Humble_Administrator%27s_Garden_Suzhou_November_2017_008.jpg"],
+      ["Xiaolongbao","https://en.wikipedia.org/wiki/Xiaolongbao","Soup dumplings: nibble a hole, sip the broth, then eat. Jia Jia Tang Bao is the classic local spot.","~¥30–60 a basket","https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Xiaolongbao_Shanghai.jpg/960px-Xiaolongbao_Shanghai.jpg",1],
+      ["Shengjianbao","https://en.wikipedia.org/wiki/Shengjian_mantou","Pan-fried pork buns with crispy bottoms and hot soup inside. Yang's Dumpling is the go-to.","~¥20 for 4","https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/2022-09-03_Sheng_Jian_Bao_-_Shanghai_Pan-Fried_Pork_Buns.jpg/960px-2022-09-03_Sheng_Jian_Bao_-_Shanghai_Pan-Fried_Pork_Buns.jpg",1],
+      ["Hairy crab","https://en.wikipedia.org/wiki/Chinese_mitten_crab","December is the tail of crab season. The rich orange roe is the prize; eat it steamed with ginger vinegar.","~¥80–200 each","https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Shanghai_hairy_crab_%284178989634%29.jpg/960px-Shanghai_hairy_crab_%284178989634%29.jpg",1],
   ]};
 const REGIONS={
   ZJJ:{name:"Zhangjiajie",tag:"Avatar mountains",emoji:"⛰️",ll:[29.35,110.55],nights:2,blurb:"Sandstone pillars + Tianmen",
@@ -274,6 +306,7 @@ const REGIONS={
       ["Tianmen Mountain","https://en.wikipedia.org/wiki/Tianmen_Mountain","Heaven's Gate arch, the 999 steps and the cliffside glass walkways.","¥288","https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Tianmen_38330-Zhangjiajie_%2849047525877%29.jpg/960px-Tianmen_38330-Zhangjiajie_%2849047525877%29.jpg"],
       ["Grand Canyon Glass Bridge","https://en.wikipedia.org/wiki/Zhangjiajie_Glass_Bridge","A 430 m glass-bottomed bridge strung across a canyon.","¥178 combo","https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/ZhangjiajieGlassByHighestBridges.jpg/960px-ZhangjiajieGlassByHighestBridges.jpg"],
       ["Baofeng Lake","https://en.wikipedia.org/wiki/Baofeng_Lake","A quiet boat ride between cliffs, inside the Wulingyuan area.","~¥96","https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/%E5%BC%A0%E5%AE%B6%E7%95%8C%E5%9B%BD%E5%AE%B6%E6%A3%AE%E6%9E%97%E5%85%AC%E5%9B%AD-%E5%AE%9D%E5%B3%B0%E6%B9%96_-_panoramio.jpg/960px-%E5%BC%A0%E5%AE%B6%E7%95%8C%E5%9B%BD%E5%AE%B6%E6%A3%AE%E6%9E%97%E5%85%AC%E5%9B%AD-%E5%AE%9D%E5%B3%B0%E6%B9%96_-_panoramio.jpg"],
+      ["Sanxiaguo","https://commons.wikimedia.org/wiki/File:China_WP_20160813_007_(28643522724).jpg","Tujia 'three in a pot': a dry, spicy pot of pork, tripe and cured meats kept bubbling at your table.","~¥60–100 to share","https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/China_WP_20160813_007_%2828643522724%29.jpg/960px-China_WP_20160813_007_%2828643522724%29.jpg",1],
     ]},
   CKG:{name:"Chongqing",tag:"Cyberpunk hot pot",emoji:"🌶️",ll:[29.56,106.55],nights:2,blurb:"Hot pot, Hongyadong at night",
     room:[300,450,800],
@@ -284,6 +317,8 @@ const REGIONS={
       ["Yangtze River Cableway","https://en.wikipedia.org/wiki/Yangtze_River_Cableway","A 1980s cable car across the river. Go at dusk.","~¥20","https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Chongqing_Changjiang_Cableway.jpg/960px-Chongqing_Changjiang_Cableway.jpg"],
       ["Wulong Karst","https://en.wikipedia.org/wiki/Wulong_Karst","Giant natural bridges and sinkholes, about 2h out. A full day trip.","~¥300+","https://upload.wikimedia.org/wikipedia/commons/e/ef/Three_Natural_Bridges_CNS_2024_%286%29.png"],
       ["Ciqikou","https://en.wikipedia.org/wiki/Ciqikou","Old riverside town of stone alleys, snacks and teahouses.","Free","https://upload.wikimedia.org/wikipedia/commons/e/e3/%E4%BA%BA%E5%A4%B4%E6%94%92%E5%8A%A8%E7%9A%84%E7%A3%81%E5%99%A8%E5%8F%A3.jpg"],
+      ["Chongqing hot pot","https://en.wikipedia.org/wiki/Chongqing_hot_pot","Numbing beef-tallow broth loaded with chilies. Order a split pot (yuanyang) if anyone can't take the heat.","~¥100–150 a person","https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Concentric_hot_pot_in_Chongqing_%2820180217165607%29.jpg/960px-Concentric_hot_pot_in_Chongqing_%2820180217165607%29.jpg",1],
+      ["Chongqing xiaomian","https://en.wikipedia.org/wiki/Chongqing_noodles","The city's breakfast: spicy, numbing wheat noodles from tiny street-side shops.","~¥10–15","https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/%E9%87%8D%E5%BA%86%E5%B0%8F%E9%9D%A2_-_2024-05-25.jpg/960px-%E9%87%8D%E5%BA%86%E5%B0%8F%E9%9D%A2_-_2024-05-25.jpg",1],
     ]},
   AAT:{name:"Altay",tag:"Powder",emoji:"🏂",ll:[47.84,88.14],nights:3,blurb:"Jiangjunshan, best snow in China",
     room:[500,800,1400],
@@ -294,6 +329,8 @@ const REGIONS={
       ["Kanas Lake","https://en.wikipedia.org/wiki/Kanas_Lake","An alpine lake near the Russian border, frozen silent in winter.","Long day trip","https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Lake_Kanas.jpg/960px-Lake_Kanas.jpg"],
       ["Hemu Village","https://commons.wikimedia.org/wiki/File:Hemu_River_and_Mongolian_Village.jpg","Wooden Tuvan cabins under snow, famous for misty winter mornings.","Overnight trip","https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Hemu_River_and_Mongolian_Village.jpg/960px-Hemu_River_and_Mongolian_Village.jpg"],
       ["Altai Mountains","https://en.wikipedia.org/wiki/Altai_Mountains","Where skiing may have started: rock art here shows hunters on skis.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Altai_Mountains.jpg/960px-Altai_Mountains.jpg"],
+      ["Dapanji","https://en.wikipedia.org/wiki/Dapanji","'Big plate chicken': chicken and potatoes stewed with chilies, finished with hand-pulled flat noodles.","~¥100–150 to share","https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Dapanji_Uyghur_Style.jpg/960px-Dapanji_Uyghur_Style.jpg",1],
+      ["Lamb skewers","https://en.wikipedia.org/wiki/Chuan_(food)","Cumin-and-chili lamb grilled over charcoal. In Xinjiang the skewers are huge. Perfect after skiing.","~¥8–15 each","https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Jumbo_kebab_at_Xinjiang_Restaurant_%2820141121184744%29.JPG/960px-Jumbo_kebab_at_Xinjiang_Restaurant_%2820141121184744%29.JPG",1],
     ]},
   PEK:{name:"Beijing",tag:"Great Wall",emoji:"🏯",ll:[39.90,116.40],nights:3,blurb:"Forbidden City + Mutianyu",
     room:[400,650,1100],
@@ -305,6 +342,8 @@ const REGIONS={
       ["Summer Palace","https://en.wikipedia.org/wiki/Summer_Palace","Imperial lakeside garden. Kunming Lake freezes in December.","~¥20","https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Longevity_Hill_of_the_Summer_Palace.jpg/960px-Longevity_Hill_of_the_Summer_Palace.jpg"],
       ["Jingshan Park","https://en.wikipedia.org/wiki/Jingshan_Park","The best view over the Forbidden City rooftops at sunset.","¥2","https://upload.wikimedia.org/wikipedia/commons/1/19/Jingshan_park.jpg"],
       ["Hutongs","https://en.wikipedia.org/wiki/Hutong","Old alley neighborhoods, best explored by bike.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Beijing_hutong_area_3.jpg/960px-Beijing_hutong_area_3.jpg"],
+      ["Peking duck","https://en.wikipedia.org/wiki/Peking_duck","Crisp lacquered duck carved at the table and rolled in thin pancakes. Siji Minfu is popular; queue early.","~¥200–300 a duck","https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Peking_Duck%2C_2014_%2801%29.jpg/960px-Peking_Duck%2C_2014_%2801%29.jpg",1],
+      ["Zhajiangmian","https://en.wikipedia.org/wiki/Zhajiangmian","Thick noodles with fermented soybean pork sauce and crunchy veg. Stir it all together.","~¥25–35","https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Zhajiangmian_20180501.jpg/960px-Zhajiangmian_20180501.jpg",1],
     ]},
   SZX:{name:"Shenzhen",tag:"Future city",emoji:"🏙️",ll:[22.54,114.06],nights:2,blurb:"Skyline, tech, warm weather",
     room:[350,550,900],
@@ -315,6 +354,8 @@ const REGIONS={
       ["Huaqiangbei","https://en.wikipedia.org/wiki/Huaqiangbei","The world's biggest electronics market. Gadgets you've never heard of.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Huaqiangbei%26Shennan_Cross2021.jpg/960px-Huaqiangbei%26Shennan_Cross2021.jpg"],
       ["OCT Loft","https://commons.wikimedia.org/wiki/File:OCT_LOFT%2C_SHENZHEN_%2841%29.jpg","Old factories turned into a creative district of galleries and cafés.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/OCT_LOFT%2C_SHENZHEN_%2841%29.jpg/960px-OCT_LOFT%2C_SHENZHEN_%2841%29.jpg"],
       ["Dafen Oil Painting Village","https://commons.wikimedia.org/wiki/File:Artists_at_work_in_Dafen_Oil_Painting_Village.jpg","Thousands of painters copying (and making) art in narrow lanes.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Artists_at_work_in_Dafen_Oil_Painting_Village.jpg/960px-Artists_at_work_in_Dafen_Oil_Painting_Village.jpg"],
+      ["Dim sum","https://en.wikipedia.org/wiki/Dim_sum","Cantonese morning tea: shrimp dumplings, char siu buns and rice rolls with endless pots of tea.","~¥80–120 a person","https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Three_dim_sum_in_steamer_basket.jpg/960px-Three_dim_sum_in_steamer_basket.jpg",1],
+      ["Chaoshan beef hot pot","https://en.wikipedia.org/wiki/Chaoshan_beef_hotpot","Beef sliced fresh by cut and swished in clear broth for a few seconds. Shenzhen does it really well.","~¥120–180 a person","https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Chaoshan_Beef_Hot_Pot_at_Baheli_Haiji%2C_ZGC1_%2820221003132726%29.jpg/960px-Chaoshan_Beef_Hot_Pot_at_Baheli_Haiji%2C_ZGC1_%2820221003132726%29.jpg",1],
     ]},
   WUH:{name:"Wuhan",tag:"River city",emoji:"🌉",ll:[30.59,114.30],nights:2,blurb:"Yangtze bridges + hot dry noodles",
     room:[250,400,700],
@@ -325,6 +366,8 @@ const REGIONS={
       ["Hubu Alley","https://commons.wikimedia.org/wiki/File:Hubu_Alley%2C_Wuchang%2C_Wuhan%2C_Hubei%2C_China%2C_430000_-_panoramio_%2868%29.jpg","Breakfast street. Get the hot dry noodles (reganmian).","Cheap eats","https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Hubu_Alley%2C_Wuchang%2C_Wuhan%2C_Hubei%2C_China%2C_430000_-_panoramio_%2868%29.jpg/960px-Hubu_Alley%2C_Wuchang%2C_Wuhan%2C_Hubei%2C_China%2C_430000_-_panoramio_%2868%29.jpg"],
       ["Wuhan Yangtze River Bridge","https://en.wikipedia.org/wiki/Wuhan_Yangtze_River_Bridge","The first bridge ever built across the Yangtze, from 1957.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Wuhan_Yangtze_River_Bridge-1.jpg/960px-Wuhan_Yangtze_River_Bridge-1.jpg"],
       ["Hubei Provincial Museum","https://en.wikipedia.org/wiki/Hubei_Provincial_Museum","Home of the Marquis Yi bronze bells, played live in short concerts.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Hubei_Provincial_Museum.JPG/960px-Hubei_Provincial_Museum.JPG"],
+      ["Reganmian","https://en.wikipedia.org/wiki/Hot_dry_noodles","Wuhan's signature breakfast: springy noodles tossed in sesame paste, pickles and chili oil.","~¥8","https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Hot_Dry_Noodles.jpg/960px-Hot_Dry_Noodles.jpg",1],
+      ["Doupi","https://en.wikipedia.org/wiki/Doupi","A crisp tofu-skin and egg crust over sticky rice, mushrooms and pork. A very filling breakfast.","~¥10","https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Doupi_breakfast_in_Wuhan.jpeg/960px-Doupi_breakfast_in_Wuhan.jpeg",1],
     ]},
   CTU:{name:"Chengdu",tag:"Pandas + Sichuan food",emoji:"🐼",ll:[30.66,104.07],nights:2,blurb:"Pandas, teahouses, Leshan Buddha",
     room:[300,450,800],
@@ -335,6 +378,8 @@ const REGIONS={
       ["Kuanzhai Alley","https://commons.wikimedia.org/wiki/File:Street_scene_-_Kuanzhai_Alleys_-_Chengdu%2C_China_-_DSC05311.jpg","Restored Qing-dynasty lanes full of snacks and ear-cleaning stalls.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Street_scene_-_Kuanzhai_Alleys_-_Chengdu%2C_China_-_DSC05311.jpg/960px-Street_scene_-_Kuanzhai_Alleys_-_Chengdu%2C_China_-_DSC05311.jpg"],
       ["Wenshu Monastery","https://commons.wikimedia.org/wiki/File:Hall_-_Wenshu_Monastery_-_Chengdu%2C_China_-_DSC05252.jpg","Working temple with a tea house where locals sit for hours.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Hall_-_Wenshu_Monastery_-_Chengdu%2C_China_-_DSC05252.jpg/960px-Hall_-_Wenshu_Monastery_-_Chengdu%2C_China_-_DSC05252.jpg"],
       ["Mount Emei","https://en.wikipedia.org/wiki/Mount_Emei","Sacred mountain with a snowy summit in December.","Full day","https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/%E5%B3%A8%E7%9C%89%E5%B1%B1%E9%A3%8E%E6%99%AF%E5%8C%BA_Mount_Emei_Scenic_Area_07.jpg/960px-%E5%B3%A8%E7%9C%89%E5%B1%B1%E9%A3%8E%E6%99%AF%E5%8C%BA_Mount_Emei_Scenic_Area_07.jpg"],
+      ["Mapo tofu","https://en.wikipedia.org/wiki/Mapo_tofu","Silky tofu in a fiery, numbing chili and pork sauce. Chen Mapo Tofu claims to be the original.","~¥25–40","https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Chen_Mapo_Tofu.jpg/960px-Chen_Mapo_Tofu.jpg",1],
+      ["Dan dan noodles","https://en.wikipedia.org/wiki/Dan_dan_noodles","A small bowl of noodles with chili oil, Sichuan pepper and minced pork.","~¥15","https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/%E6%8B%85%E6%8B%85%E9%9D%A2_Dandan_noodles.jpg/960px-%E6%8B%85%E6%8B%85%E9%9D%A2_Dandan_noodles.jpg",1],
     ]},
   XIY:{name:"Xi'an",tag:"Terracotta Army",emoji:"🗿",ll:[34.34,108.94],nights:2,blurb:"Warriors, city wall, street food",
     room:[250,400,700],
@@ -345,6 +390,8 @@ const REGIONS={
       ["Muslim Quarter","https://commons.wikimedia.org/wiki/File:1_xian_muslim_quarter_china_2011.JPG","Night food street: roujiamo, biangbiang noodles, lamb skewers.","Cheap eats","https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/1_xian_muslim_quarter_china_2011.JPG/960px-1_xian_muslim_quarter_china_2011.JPG"],
       ["Giant Wild Goose Pagoda","https://en.wikipedia.org/wiki/Giant_Wild_Goose_Pagoda","Tang-era pagoda with a fountain show out front.","~¥30","https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Giant_Wild_Goose_Pagoda.jpg/960px-Giant_Wild_Goose_Pagoda.jpg"],
       ["Mount Hua","https://en.wikipedia.org/wiki/Mount_Hua","Granite peaks and the infamous plank walk, about 2h out.","~¥160 + cable car","https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Hua_Shan.jpg/960px-Hua_Shan.jpg"],
+      ["Roujiamo","https://en.wikipedia.org/wiki/Roujiamo","The 'Chinese hamburger': slow-braised meat chopped into a crispy flatbread.","~¥15–25","https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Roujiamo.jpg/960px-Roujiamo.jpg",1],
+      ["Yangrou paomo","https://en.wikipedia.org/wiki/Paomo","Tear flatbread into tiny pieces and they cook it in rich lamb soup. Xi'an's comfort food.","~¥35–50","https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Yangrou_Paomo.JPG/960px-Yangrou_Paomo.JPG",1],
     ]},
   HGH:{name:"Hangzhou",tag:"West Lake",emoji:"🍵",ll:[30.27,120.15],nights:1,blurb:"West Lake, tea hills",
     room:[350,550,900],
@@ -355,6 +402,8 @@ const REGIONS={
       ["Longjing tea villages","https://en.wikipedia.org/wiki/Longjing_tea","Hillside tea farms where Dragon Well tea is grown. Tastings in farmhouses.","~¥50","https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Longjing_tea.jpg/960px-Longjing_tea.jpg"],
       ["Leifeng Pagoda","https://en.wikipedia.org/wiki/Leifeng_Pagoda","Rebuilt pagoda with a sunset view over the lake.","¥40","https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Leifeng_Pagoda_DJI_0593_%282%29.jpg/960px-Leifeng_Pagoda_DJI_0593_%282%29.jpg"],
       ["Xixi Wetland","https://en.wikipedia.org/wiki/Xixi_National_Wetland_Park","Quiet waterways and boardwalks on the edge of the city.","~¥80","https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Xixi_Wetland_Park%2C_Hangzhou%2C_China.jpg/960px-Xixi_Wetland_Park%2C_Hangzhou%2C_China.jpg"],
+      ["West Lake vinegar fish","https://en.wikipedia.org/wiki/West_Lake_Fish_in_Vinegar_Gravy","Poached grass carp in a sweet-and-sour vinegar sauce, Hangzhou's most famous dish.","~¥80–120","https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/West_Lake_Fish_in_Vinegar_Gravy.jpg/960px-West_Lake_Fish_in_Vinegar_Gravy.jpg",1],
+      ["Dongpo pork","https://en.wikipedia.org/wiki/Dongpo_pork","Pork belly braised in Shaoxing wine until it melts. Named after the poet Su Dongpo.","~¥20–30 a piece","https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Dongpo_pork_%28a_Hangzhou_dish%29.jpg/960px-Dongpo_pork_%28a_Hangzhou_dish%29.jpg",1],
     ]},
   KWL:{name:"Guilin · Yangshuo",tag:"Karst river",emoji:"🛶",ll:[25.27,110.29],nights:2,blurb:"Li River cruise, karst peaks",
     room:[250,450,800],
@@ -365,6 +414,8 @@ const REGIONS={
       ["Yulong River","https://en.wikipedia.org/wiki/Yulong_River","A slow bamboo raft past old stone bridges.","~¥200","https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Yulong.JPG/960px-Yulong.JPG"],
       ["Longji Rice Terraces","https://en.wikipedia.org/wiki/Longji_Rice_Terraces","Dragon's Backbone terraces carved up the mountainside, about 2h out.","~¥100","https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/LongshengRiceTerrace.jpg/960px-LongshengRiceTerrace.jpg"],
       ["Reed Flute Cave","https://en.wikipedia.org/wiki/Reed_Flute_Cave","A limestone cave lit up in neon.","~¥90","https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Stone_curtains_on_display_at_Reed_Flute_Cave.JPG/960px-Stone_curtains_on_display_at_Reed_Flute_Cave.JPG"],
+      ["Guilin rice noodles","https://en.wikipedia.org/wiki/Guilin_rice_noodles","Rice noodles with braised beef, pickles and crunchy peanuts. A cheap breakfast everywhere.","~¥8–15","https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Guilin_mifan.jpg/960px-Guilin_mifan.jpg",1],
+      ["Beer fish","https://commons.wikimedia.org/wiki/File:Pijiu_Yu_(Beer_fish)_(253141965).jpg","Yangshuo's signature: Li River carp fried, then stewed in local beer with tomatoes and chilies.","~¥80–150 to share","https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Pijiu_Yu_%28Beer_fish%29_%28253141965%29.jpg/960px-Pijiu_Yu_%28Beer_fish%29_%28253141965%29.jpg",1],
     ]},
   HRB:{name:"Harbin",tag:"Ice city",emoji:"❄️",ll:[45.80,126.53],nights:2,blurb:"Ice & Snow World, Russian old town",
     room:[300,500,900],
@@ -375,6 +426,8 @@ const REGIONS={
       ["Central Street","https://en.wikipedia.org/wiki/Central_Street_(Harbin)","Cobblestone pedestrian street with Russian-era architecture.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Central_Street%2C_Harbin_16.jpg/960px-Central_Street%2C_Harbin_16.jpg"],
       ["Yabuli Ski Resort","https://en.wikipedia.org/wiki/Yabuli_Ski_Resort","China's best-known ski resort, about 3h out. Long day trip.","~¥700 w/ rental","https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Sun_Mountain_Yabuli.jpg/960px-Sun_Mountain_Yabuli.jpg"],
       ["Siberian Tiger Park","https://en.wikipedia.org/wiki/Harbin_Siberian_Tiger_Park","Ride a bus through enclosures of Siberian tigers.","~¥100","https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Panthera_tigris_altaica_%E6%9D%B1%E5%8C%97%E8%99%8E_-_panoramio.jpg/960px-Panthera_tigris_altaica_%E6%9D%B1%E5%8C%97%E8%99%8E_-_panoramio.jpg"],
+      ["Guobaorou","https://commons.wikimedia.org/wiki/File:Guobaorou_at_Zhenbutong,_Changchun_(20220826174428).jpg","Crispy sweet-and-sour pork, invented in Harbin for Russian guests in the early 1900s.","~¥50–70 a plate","https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Guobaorou_at_Zhenbutong%2C_Changchun_%2820220826174428%29.jpg/960px-Guobaorou_at_Zhenbutong%2C_Changchun_%2820220826174428%29.jpg",1],
+      ["Harbin red sausage","https://commons.wikimedia.org/wiki/File:China_Harbin_Hongchang_Sausages.jpg","Smoky garlic sausage brought by Russian settlers. Grab some from Qiulin near Central Street.","~¥40–60 a pound","https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/China_Harbin_Hongchang_Sausages.jpg/960px-China_Harbin_Hongchang_Sausages.jpg",1],
     ]},
 };
 // Researched domestic legs (CNY). Anything not listed is estimated from distance.
@@ -387,17 +440,21 @@ const LEGS={
 const ZH={
   "Shanghai":"上海","Zhangjiajie":"张家界","Chongqing":"重庆","Altay":"阿勒泰","Beijing":"北京","Shenzhen":"深圳",
   "Wuhan":"武汉","Chengdu":"成都","Xi'an":"西安","Hangzhou":"杭州","Guilin · Yangshuo":"桂林 · 阳朔","Harbin":"哈尔滨",
-  "The Bund":"外滩","Yu Garden":"豫园","Shanghai Tower":"上海中心大厦","Zhujiajiao":"朱家角","Former French Concession":"法租界","Tianzifang":"田子坊",
-  "National Forest Park":"张家界国家森林公园","Hallelujah Mountain":"哈利路亚山","Tianmen Mountain":"天门山","Grand Canyon Glass Bridge":"大峡谷玻璃桥","Baofeng Lake":"宝峰湖","Hongyadong":"洪崖洞",
-  "Liziba Station":"李子坝站","Yangtze River Cableway":"长江索道","Wulong Karst":"武隆喀斯特","Ciqikou":"磁器口","Jiangjunshan":"将军山","Koktokay":"可可托海",
-  "Kanas Lake":"喀纳斯湖","Hemu Village":"禾木村","Altai Mountains":"阿尔泰山","Forbidden City":"故宫","Mutianyu Great Wall":"慕田峪长城","Temple of Heaven":"天坛",
-  "Summer Palace":"颐和园","Jingshan Park":"景山公园","Hutongs":"胡同","Ping An Finance Centre":"平安金融中心","Shenzhen Bay Park":"深圳湾公园","Huaqiangbei":"华强北",
-  "OCT Loft":"华侨城创意文化园","Dafen Oil Painting Village":"大芬油画村","Yellow Crane Tower":"黄鹤楼","East Lake":"东湖","Hubu Alley":"户部巷","Wuhan Yangtze River Bridge":"武汉长江大桥",
-  "Hubei Provincial Museum":"湖北省博物馆","Giant Panda Base":"大熊猫繁育研究基地","Leshan Giant Buddha":"乐山大佛","Kuanzhai Alley":"宽窄巷子","Wenshu Monastery":"文殊院","Mount Emei":"峨眉山",
-  "Terracotta Army":"兵马俑","City Wall":"西安城墙","Muslim Quarter":"回民街","Giant Wild Goose Pagoda":"大雁塔","Mount Hua":"华山","West Lake":"西湖",
-  "Lingyin Temple":"灵隐寺","Longjing tea villages":"龙井村","Leifeng Pagoda":"雷峰塔","Xixi Wetland":"西溪湿地","Li River":"漓江","Yangshuo":"阳朔",
-  "Yulong River":"遇龙河","Longji Rice Terraces":"龙脊梯田","Reed Flute Cave":"芦笛岩","Ice and Snow World":"冰雪大世界","Saint Sophia Cathedral":"圣索菲亚大教堂","Central Street":"中央大街",
-  "Yabuli Ski Resort":"亚布力滑雪场","Siberian Tiger Park":"东北虎林园",
+  "The Bund":"外滩","Former French Concession":"法租界","National Forest Park":"张家界国家森林公园","Hallelujah Mountain":"哈利路亚山","Tianmen Mountain":"天门山","Grand Canyon Glass Bridge":"大峡谷玻璃桥",
+  "Baofeng Lake":"宝峰湖","Hongyadong":"洪崖洞","Liziba Station":"李子坝站","Yangtze River Cableway":"长江索道","Wulong Karst":"武隆喀斯特","Ciqikou":"磁器口",
+  "Jiangjunshan":"将军山","Koktokay":"可可托海","Kanas Lake":"喀纳斯湖","Hemu Village":"禾木村","Altai Mountains":"阿尔泰山","Forbidden City":"故宫",
+  "Mutianyu Great Wall":"慕田峪长城","Temple of Heaven":"天坛","Summer Palace":"颐和园","Jingshan Park":"景山公园","Hutongs":"胡同","Ping An Finance Centre":"平安金融中心",
+  "Shenzhen Bay Park":"深圳湾公园","Huaqiangbei":"华强北","OCT Loft":"华侨城创意文化园","Dafen Oil Painting Village":"大芬油画村","Yellow Crane Tower":"黄鹤楼","East Lake":"东湖",
+  "Hubu Alley":"户部巷","Wuhan Yangtze River Bridge":"武汉长江大桥","Hubei Provincial Museum":"湖北省博物馆","Giant Panda Base":"大熊猫繁育研究基地","Leshan Giant Buddha":"乐山大佛","Kuanzhai Alley":"宽窄巷子",
+  "Wenshu Monastery":"文殊院","Mount Emei":"峨眉山","Terracotta Army":"兵马俑","City Wall":"西安城墙","Muslim Quarter":"回民街","Giant Wild Goose Pagoda":"大雁塔",
+  "Mount Hua":"华山","West Lake":"西湖","Lingyin Temple":"灵隐寺","Longjing tea villages":"龙井村","Leifeng Pagoda":"雷峰塔","Xixi Wetland":"西溪湿地",
+  "Li River":"漓江","Yangshuo":"阳朔","Yulong River":"遇龙河","Longji Rice Terraces":"龙脊梯田","Reed Flute Cave":"芦笛岩","Ice and Snow World":"冰雪大世界",
+  "Saint Sophia Cathedral":"圣索菲亚大教堂","Central Street":"中央大街","Yabuli Ski Resort":"亚布力滑雪场","Siberian Tiger Park":"东北虎林园","Jing'an Temple":"静安寺","Shanghai Museum East":"上海博物馆东馆",
+  "West Bund":"西岸","Suzhou day trip":"苏州一日游","Xiaolongbao":"小笼包","Shengjianbao":"生煎包","Hairy crab":"大闸蟹","Sanxiaguo":"三下锅",
+  "Chongqing hot pot":"重庆火锅","Chongqing xiaomian":"重庆小面","Dapanji":"大盘鸡","Lamb skewers":"羊肉串","Peking duck":"北京烤鸭","Zhajiangmian":"炸酱面",
+  "Dim sum":"早茶点心","Chaoshan beef hot pot":"潮汕牛肉火锅","Reganmian":"热干面","Doupi":"豆皮","Mapo tofu":"麻婆豆腐","Dan dan noodles":"担担面",
+  "Roujiamo":"肉夹馍","Yangrou paomo":"羊肉泡馍","West Lake vinegar fish":"西湖醋鱼","Dongpo pork":"东坡肉","Guilin rice noodles":"桂林米粉","Beer fish":"啤酒鱼",
+  "Guobaorou":"锅包肉","Harbin red sausage":"哈尔滨红肠",
 };
 const DEFAULT_REGIONS=["ZJJ","CKG","AAT"];
 const COLORS={"Flights & trains":"#f87171","Lodging":"#38bdf8","Snowboarding":"#a5f3fc","Sights":"#f5c451","Food":"#34d399","Getting around & misc":"#c4b5fd"};
@@ -412,6 +469,8 @@ for(const k in REGIONS) nights[k]=REGIONS[k].nights;
 const $=id=>document.getElementById(id);
 const fxr=()=>+$("fx").value||7.1;
 const zh=(n,cls="zh")=>ZH[n]?`<span class="${cls}" lang="zh-Hans">${ZH[n]}</span>`:"";
+// "¥40–60 a plate" → "¥40–60 (~$6–8) a plate"
+const withUsd=s=>s.replace(/¥([\d,]+)(?:–([\d,]+))?/g,(m,a,b)=>{const u=x=>Math.max(1,Math.round(+x.replace(/,/g,"")/fxr())),lo=u(a),hi=b?u(b):lo;return `${m} (~$${lo}${hi>lo?"–"+hi:""})`});
 const fmt=n=>"$"+Math.round(n).toLocaleString();
 const r10=n=>Math.round(n/10)*10;
 
@@ -496,16 +555,19 @@ function renderPicker(){
   const w=$("warn");w.className="warn"+(P.over?" show":"");
   w.textContent=P.over?`That's ${P.away} nights away but there are only ${cap} between Dec 9 and Dec 19. Drop a region or trim nights; as is, the trip runs ${P.over} night${P.over>1?"s":""} past Dec 19.`:"";
 }
-function renderRoute(){
+function routeStops(){
   const P=plan(sel),{codes}=P;
   const stops=[{c:"SHA",n:codes.length?FIRST_SHANGHAI:NIGHTS,d:codes.length?"SFO and JFK crews meet at PVG":"Base camp the whole trip; day trips to Hangzhou or Suzhou"}];
   codes.forEach(k=>stops.push({c:k,n:nights[k],d:REGIONS[k].blurb,ski:!!REGIONS[k].ski}));
   if(codes.length) stops.push({c:"SHA",n:P.shaEnd,d:P.shaEnd?"Free bed, Bund, last dinners":"Straight to the airport",home:1});
   let day=7,prev=null;
-  $("days").innerHTML=stops.map(s=>{const a=day;day+=s.n;let how="";
-    if(prev){const l=leg(prev,s.c);how=`<span class="how">${l.mode} ${l.time}</span>`}prev=s.c;
-    return `<div class="day ${s.ski?"ski":""} ${s.home?"home":""}"><div class="dow">${s.n?`Dec ${a} – ${day}`:`Dec ${a}`} · ${s.n}n</div><div class="dt">${CITY[s.c]}${zh(CITY[s.c])}${s.ski?" 🏂":""}</div><div class="ds">${s.d}</div>${how}</div>`}).join("")
-    +`<div class="day home"><div class="dow">Dec ${day}</div><div class="dt">Fly home ✈</div><div class="ds">PVG → ${origin}</div></div>`;
+  for(const s of stops){s.a=day;day+=s.n;s.b=day;s.leg=prev?leg(prev,s.c):null;prev=s.c}
+  return{stops,end:day};
+}
+function renderRoute(){
+  const{stops,end}=routeStops();
+  $("days").innerHTML=stops.map(s=>`<div class="day ${s.ski?"ski":""} ${s.home?"home":""}"><div class="dow">${s.n?`Dec ${s.a} – ${s.b}`:`Dec ${s.a}`} · ${s.n}n</div><div class="dt">${CITY[s.c]}${zh(CITY[s.c])}${s.ski?" 🏂":""}</div><div class="ds">${s.d}</div>${s.leg?`<span class="how">${s.leg.mode} ${s.leg.time}</span>`:""}</div>`).join("")
+    +`<div class="day home"><div class="dow">Dec ${end}</div><div class="dt">Fly home ✈</div><div class="ds">PVG → ${origin}</div></div>`;
   $("routeh").textContent=stops.length===1?"Shanghai, all in":stops.length+" stops, one loop";
 }
 function renderCosts(){
@@ -532,14 +594,57 @@ function renderExplore(){
   const btn=xtab==="SHA"?"":`<button class="addbtn ${inTrip?"rm":""}" data-add="${xtab}">${inTrip?"✓ In trip · remove":"+ Add "+r.name+" to trip"}</button>`;
   $("xbody").innerHTML=`<div class="xhead"><div><h3>${r.emoji} ${r.name}${zh(r.name)}</h3><p>${xtab==="SHA"?"Home base: 2 nights at the start, the rest at the end. Free bed at your friend's place.":r.blurb+" · "+r.nights+" night"+(r.nights>1?"s":"")+" suggested"}</p></div>${btn}</div>
     <div class="xgrid">${r.explore.map(x=>{const u=x[4];return `<a class="xc" href="${x[1]}" target="_blank" rel="noopener">
-      <div class="ph">${u?`<span class="fb">${r.emoji}</span><img src="${u}" alt="${x[0]}" loading="lazy" decoding="async" onerror="this.remove()">`:`<span class="fb">${r.emoji}</span>`}</div>
-      <div class="bd"><h4>${x[0]}${zh(x[0])}</h4><p>${x[2]}</p><span class="tip">${x[3]}</span></div></a>`}).join("")}</div>`;
+      <div class="ph">${x[5]?`<span class="eat">🥢 Must eat</span>`:""}${u?`<span class="fb">${r.emoji}</span><img src="${u}" alt="${x[0]}" loading="lazy" decoding="async" onerror="this.remove()">`:`<span class="fb">${r.emoji}</span>`}</div>
+      <div class="bd"><h4>${x[0]}${zh(x[0])}</h4><p>${x[2]}</p><span class="tip">${withUsd(x[3])}</span></div></a>`}).join("")}</div>`;
 }
 function renderAll(){renderTop();renderPicker();renderRoute();renderCosts();renderExplore()}
 
+/* ---------- export / share ---------- */
+// Plan lives in the URL hash, e.g. #plan=SFO_1_ZJJ2-CKG2-AAT3_7.1 (origin_tier_regions+nights_fx)
+const planHash=()=>"#plan="+[origin,tier,plan(sel).codes.map(k=>k+nights[k]).join("-"),fxr()].join("_");
+const shareURL=()=>location.href.split("#")[0]+planHash();
+function loadHash(){
+  const m=location.hash.match(/^#plan=(\w+)_(\d)_([\w-]*)_([\d.]+)$/);if(!m) return;
+  if(ORIGINS[m[1]]) origin=m[1];
+  tier=Math.min(2,+m[2]);
+  sel.clear();
+  for(const x of m[3].split("-").filter(Boolean)){const k=x.slice(0,3),n=+x.slice(3);if(REGIONS[k]){sel.add(k);if(n>=1&&n<=6)nights[k]=n}}
+  $("fx").value=m[4];
+}
+const zhTxt=n=>ZH[n]?" "+ZH[n]:"";
+function planText(){
+  const D=build(sel),{all,cats}=totals(D,tier),{stops,end}=routeStops(),P=plan(sel),L=[];
+  L.push("CHINA 中国 · Dec 6–19, 2026","From "+origin+" · "+TIERS[tier]+" tier · "+fmt(all)+" per person");
+  if(P.over) L.push("⚠ "+P.over+" night"+(P.over>1?"s":"")+" over the Dec 19 end date");
+  L.push("","ROUTE");
+  for(const s of stops){const nm=CITY[s.c];
+    L.push(`${s.n?`Dec ${s.a}–${s.b}`:`Dec ${s.a}`}  ${nm}${zhTxt(nm)}${s.n?` · ${s.n} night${s.n>1?"s":""}`:""}${s.leg?` (${s.leg.mode==="🚄"?"train":"flight"} ${s.leg.time})`:""}`);}
+  L.push(`Dec ${end}  Fly home PVG → ${origin}`,"","COSTS (per person, "+TIERS[tier]+")");
+  for(const c in D){L.push(`${c}: ${fmt(cats[c])}`);for(const i of D[c]) L.push(`  · ${i[0]}: ${fmt(usd(i,tier))}`)}
+  L.push("",`TOTAL: ${fmt(all)} per person (USD → CNY ${fxr()})`,"","Open this exact plan:",shareURL());
+  return L.join("\n");
+}
+function openShare(){
+  history.replaceState(null,"",planHash());
+  $("ptext").value=planText();
+  $("mshare").hidden=!navigator.share;
+  $("modal").hidden=false;$("mcopy").focus();
+}
+const closeShare=()=>$("modal").hidden=true;
+$("mclose").onclick=closeShare;
+$("modal").addEventListener("click",e=>{if(e.target.id==="modal")closeShare()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeShare()});
+$("mcopy").onclick=async()=>{const v=$("ptext").value;
+  try{await navigator.clipboard.writeText(v)}catch(_){$("ptext").select();document.execCommand("copy")}
+  $("mcopy").textContent="Copied!";setTimeout(()=>$("mcopy").textContent="Copy",1600)};
+$("mshare").onclick=()=>navigator.share({title:"China trip plan",text:$("ptext").value}).catch(()=>{});
+$("mdl").onclick=()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([$("ptext").value],{type:"text/plain;charset=utf-8"}));
+  a.download="china-trip-plan.txt";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+
 /* ---------- events ---------- */
 document.addEventListener("click",e=>{
-  const t=e.target.closest("[data-o],[data-t],[data-n],[data-r],[data-x],[data-add],.cost-head");if(!t)return;
+  const t=e.target.closest("[data-o],[data-t],[data-n],[data-r],[data-x],[data-add],[data-share],.cost-head");if(!t)return;
+  if("share" in t.dataset){openShare();return}
   const ds=t.dataset;
   if(ds.o) origin=ds.o;
   else if(ds.t) tier=+ds.t;
@@ -553,6 +658,7 @@ document.addEventListener("click",e=>{
 document.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.matches(".rc")){e.preventDefault();e.target.click()}});
 $("fx").addEventListener("input",renderAll);
 new IntersectionObserver(([en])=>$("dock").classList.toggle("show",!en.isIntersecting)).observe($("top"));
+loadHash();
 renderAll();
 
 /* ---------- hero effects ---------- */
