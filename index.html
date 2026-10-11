@@ -19,7 +19,41 @@ h2{font-size:clamp(32px,5vw,64px);line-height:1.02;margin:0 0 10px;font-weight:9
 .lede{color:var(--muted);font-size:16px;margin:0 0 22px;max-width:720px;line-height:1.5}
 .grad{background:linear-gradient(90deg,var(--gold),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
 .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(16px,5vw,56px)}
-.hero{padding:clamp(64px,12vh,130px) 0 56px;background:radial-gradient(1000px 600px at 85% 0%,rgba(56,189,248,.16),transparent),radial-gradient(900px 500px at 0% 100%,rgba(245,196,81,.1),transparent),var(--ink)}
+.hero{position:relative;isolation:isolate;overflow:hidden;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:clamp(72px,12vh,130px) 0 96px;background:var(--deep)}
+.hero>.wrap{width:100%}
+.hero-bg{position:absolute;inset:-6% 0;z-index:-3;background:url("https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Piliers_de_gr%C3%A8s_des_monts_Tianzi%2C_Zhangjiajie_%282026%29.jpg/1920px-Piliers_de_gr%C3%A8s_des_monts_Tianzi%2C_Zhangjiajie_%282026%29.jpg") center 40%/cover no-repeat;opacity:0;transform:scale(1.12);transition:opacity 1.6s ease,transform 2.4s cubic-bezier(.2,.8,.2,1);will-change:transform}
+.hero.loaded .hero-bg{opacity:1;transform:scale(1.02)}
+.hero.loaded .hero-bg{animation:kenburns 38s ease-in-out 2.4s infinite alternate}
+@keyframes kenburns{from{transform:scale(1.02)}to{transform:scale(1.12) translate3d(-1.5%,-1%,0)}}
+.hero-shade{position:absolute;inset:0;z-index:-2;pointer-events:none;background:
+  linear-gradient(90deg,rgba(7,21,38,.92) 0%,rgba(7,21,38,.7) 38%,rgba(7,21,38,.25) 75%,rgba(7,21,38,.35) 100%),
+  linear-gradient(180deg,rgba(7,21,38,.55) 0%,transparent 30%,transparent 62%,var(--ink) 100%),
+  radial-gradient(900px 500px at 85% 10%,rgba(56,189,248,.22),transparent 70%),
+  radial-gradient(800px 500px at 0% 100%,rgba(245,196,81,.14),transparent 70%)}
+#snow{position:absolute;inset:0;z-index:-1;pointer-events:none;width:100%;height:100%}
+.hero .kicker,.hero h1,.hero .sub,.hero .seg,.hero .tiers,.hero .cmp,.hero .fxrow{opacity:0;transform:translateY(26px);filter:blur(6px);animation:rise .9s cubic-bezier(.2,.8,.2,1) forwards}
+.hero .kicker{animation-delay:.15s}.hero h1{animation-delay:.3s}.hero .sub{animation-delay:.5s}.hero .seg{animation-delay:.65s}.hero .tiers{animation-delay:.8s}.hero .cmp,.hero .fxrow{animation-delay:.95s}
+@keyframes rise{to{opacity:1;transform:none;filter:none}}
+.hero h1 .hero-zh{font-size:.32em;vertical-align:.9em;opacity:.85;letter-spacing:.08em;color:var(--gold);margin-left:.15em}
+.hero h1{text-shadow:0 6px 40px rgba(0,0,0,.45)}
+.hero .grad{background-image:linear-gradient(90deg,var(--gold),var(--accent),#fff,var(--gold));background-size:300% 100%;animation:shimmer 9s linear infinite;text-shadow:none;filter:drop-shadow(0 6px 30px rgba(56,189,248,.35))}
+@keyframes shimmer{to{background-position:-300% 0}}
+.hero .sub{color:#dbe7f5;text-shadow:0 2px 18px rgba(0,0,0,.5)}
+.hero .seg,.hero .tier,.hero .fxrow input{background:rgba(7,21,38,.45);-webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);border-color:rgba(255,255,255,.18)}
+.hero .tier{position:relative;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+.hero .tier:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.4)}
+.hero .tier:before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.14) 50%,transparent 70%);transform:translateX(-120%);transition:transform .8s}
+.hero .tier:hover:before{transform:translateX(120%)}
+.hero .tier.on{box-shadow:inset 0 0 0 1px var(--gold),0 0 40px rgba(245,196,81,.25)}
+.hero .cmp,.hero .fxrow{color:#dbe7f5cc;text-shadow:0 1px 10px rgba(0,0,0,.6)}
+.scroll-cue{position:absolute;left:50%;bottom:calc(22px + env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:#ffffffb3;text-decoration:none;font-size:11px;font-weight:800;letter-spacing:.28em;text-transform:uppercase;opacity:0;animation:rise 1s 1.4s forwards}
+.scroll-cue i{width:22px;height:36px;border:2px solid #ffffff80;border-radius:12px;position:relative}
+.scroll-cue i:after{content:"";position:absolute;left:50%;top:7px;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:#fff;animation:wheel 1.8s ease-in-out infinite}
+@keyframes wheel{0%{opacity:0;transform:translateY(0)}30%{opacity:1}100%{opacity:0;transform:translateY(12px)}}
+.photo-credit{position:absolute;right:clamp(12px,3vw,28px);bottom:calc(12px + env(safe-area-inset-bottom));font-size:11px;color:#ffffff73;text-decoration:none}
+.photo-credit:hover{color:#fff}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
 .panel{padding:clamp(56px,9vh,100px) 0}
 .panel.alt{background:radial-gradient(1000px 600px at 10% 0%,rgba(245,196,81,.07),transparent),var(--ink)}
 
@@ -118,6 +152,11 @@ h2{font-size:clamp(32px,5vw,64px);line-height:1.02;margin:0 0 10px;font-weight:9
 .xc h4{margin:0 0 6px;font-size:18px;font-weight:900}
 .xc p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}
 .xc .tip{display:inline-block;margin-top:10px;font-size:12px;font-weight:800;color:var(--gold)}
+.zh{font-family:"PingFang SC","Hiragino Sans GB","Noto Sans SC","Microsoft YaHei",sans-serif;font-weight:600;letter-spacing:.04em;opacity:.7;margin-left:.45em;font-size:.72em}
+.rc .zh{display:block;margin:3px 0 0;font-size:13px;color:var(--gold);opacity:.9}
+.xc h4 .zh{display:block;margin:3px 0 0;font-size:13px;color:var(--gold);opacity:.85}
+.day .zh{display:block;margin:4px 0 0;font-size:13px;color:var(--gold);white-space:nowrap}
+.tabs .zh{font-size:.85em;opacity:.6}
 .credit{margin-top:18px;font-size:12px;color:#ffffff73}
 
 /* sticky summary */
@@ -139,15 +178,21 @@ footer{padding:36px 0 40px;font-size:13px;color:#ffffff80}
   .cost-row.total .cost-head{flex-direction:column;align-items:flex-start;gap:6px}
   .days{flex-direction:column;overflow:visible}.day{flex:none}
 }
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:700px){.hero-bg{background-position:62% 40%}.hero-shade{background:linear-gradient(180deg,rgba(7,21,38,.75) 0%,rgba(7,21,38,.55) 45%,rgba(7,21,38,.8) 80%,var(--ink) 100%)}.scroll-cue{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.hero .kicker,.hero h1,.hero .sub,.hero .seg,.hero .tiers,.hero .cmp,.hero .fxrow,.scroll-cue,.reveal{opacity:1;transform:none;filter:none}.hero-bg{opacity:1;transform:none}#snow{display:none}}
 </style>
 </head>
 <body>
 
 <section class="hero" id="top">
+  <div class="hero-bg" id="herobg" role="img" aria-label="Snow-dusted sandstone pillars of Zhangjiajie"></div>
+  <div class="hero-shade"></div>
+  <canvas id="snow" aria-hidden="true"></canvas>
+  <a class="scroll-cue" href="#build"><i></i>Build it</a>
+  <a class="photo-credit" href="https://commons.wikimedia.org/wiki/File:Piliers_de_gr%C3%A8s_des_monts_Tianzi,_Zhangjiajie_(2026).jpg" target="_blank" rel="noopener">Photo: chensiyuan · CC BY-SA 4.0</a>
   <div class="wrap">
     <p class="kicker" id="kick">Dec 6 – 19, 2026</p>
-    <h1>China <span class="grad">13 days</span></h1>
+    <h1>China<span class="zh hero-zh" lang="zh-Hans">中国</span> <span class="grad">13 days</span></h1>
     <p class="sub">Pick where you're flying from and which regions you're in for. Everything below re-prices live. Per person; Shanghai stays are free.</p>
     <div class="seg" id="origin"></div>
     <div class="tiers" id="tiers"></div>
@@ -157,7 +202,7 @@ footer{padding:36px 0 40px;font-size:13px;color:#ffffff80}
 </section>
 
 <section class="panel alt" id="build">
-  <div class="wrap">
+  <div class="wrap reveal">
     <p class="kicker">Build the trip</p>
     <h2>Tap to add a region</h2>
     <p class="lede">You fly into Shanghai, spend 2 nights there, then loop out. That leaves 10 nights to spend elsewhere; any you don't use go back to the free bed in Shanghai. Stops are put in the cheapest order automatically.</p>
@@ -168,7 +213,7 @@ footer{padding:36px 0 40px;font-size:13px;color:#ffffff80}
 </section>
 
 <section class="panel">
-  <div class="wrap">
+  <div class="wrap reveal">
     <p class="kicker">The route</p>
     <h2 id="routeh">The loop</h2>
     <div class="days" id="days"></div>
@@ -176,7 +221,7 @@ footer{padding:36px 0 40px;font-size:13px;color:#ffffff80}
 </section>
 
 <section class="panel alt" id="costs">
-  <div class="wrap">
+  <div class="wrap reveal">
     <p class="kicker">The damage</p>
     <h2>Where the money goes</h2>
     <div class="bar" id="bar"></div>
@@ -186,7 +231,7 @@ footer{padding:36px 0 40px;font-size:13px;color:#ffffff80}
 </section>
 
 <section class="panel" id="explore">
-  <div class="wrap">
+  <div class="wrap reveal">
     <p class="kicker">Explore</p>
     <h2>What's there to do</h2>
     <p class="lede">Browse each region. A green dot means it's in your trip. Tap a card to read more and see photo credits.</p>
@@ -338,6 +383,22 @@ const LEGS={
   "ZJJ-CKG":["🚄","~2h",[191,220,261]], "ZJJ-AAT":["✈","1 stop",[1300,2100,3200]], "CKG-AAT":["✈","~4h direct",[1000,1700,2800]],
   "SHA-HGH":["🚄","~1h",[73,80,120]], "SHA-PEK":["🚄","~4.5h",[550,600,950]],
 };
+// Chinese names for places, keyed by the English name used above.
+const ZH={
+  "Shanghai":"上海","Zhangjiajie":"张家界","Chongqing":"重庆","Altay":"阿勒泰","Beijing":"北京","Shenzhen":"深圳",
+  "Wuhan":"武汉","Chengdu":"成都","Xi'an":"西安","Hangzhou":"杭州","Guilin · Yangshuo":"桂林 · 阳朔","Harbin":"哈尔滨",
+  "The Bund":"外滩","Yu Garden":"豫园","Shanghai Tower":"上海中心大厦","Zhujiajiao":"朱家角","Former French Concession":"法租界","Tianzifang":"田子坊",
+  "National Forest Park":"张家界国家森林公园","Hallelujah Mountain":"哈利路亚山","Tianmen Mountain":"天门山","Grand Canyon Glass Bridge":"大峡谷玻璃桥","Baofeng Lake":"宝峰湖","Hongyadong":"洪崖洞",
+  "Liziba Station":"李子坝站","Yangtze River Cableway":"长江索道","Wulong Karst":"武隆喀斯特","Ciqikou":"磁器口","Jiangjunshan":"将军山","Koktokay":"可可托海",
+  "Kanas Lake":"喀纳斯湖","Hemu Village":"禾木村","Altai Mountains":"阿尔泰山","Forbidden City":"故宫","Mutianyu Great Wall":"慕田峪长城","Temple of Heaven":"天坛",
+  "Summer Palace":"颐和园","Jingshan Park":"景山公园","Hutongs":"胡同","Ping An Finance Centre":"平安金融中心","Shenzhen Bay Park":"深圳湾公园","Huaqiangbei":"华强北",
+  "OCT Loft":"华侨城创意文化园","Dafen Oil Painting Village":"大芬油画村","Yellow Crane Tower":"黄鹤楼","East Lake":"东湖","Hubu Alley":"户部巷","Wuhan Yangtze River Bridge":"武汉长江大桥",
+  "Hubei Provincial Museum":"湖北省博物馆","Giant Panda Base":"大熊猫繁育研究基地","Leshan Giant Buddha":"乐山大佛","Kuanzhai Alley":"宽窄巷子","Wenshu Monastery":"文殊院","Mount Emei":"峨眉山",
+  "Terracotta Army":"兵马俑","City Wall":"西安城墙","Muslim Quarter":"回民街","Giant Wild Goose Pagoda":"大雁塔","Mount Hua":"华山","West Lake":"西湖",
+  "Lingyin Temple":"灵隐寺","Longjing tea villages":"龙井村","Leifeng Pagoda":"雷峰塔","Xixi Wetland":"西溪湿地","Li River":"漓江","Yangshuo":"阳朔",
+  "Yulong River":"遇龙河","Longji Rice Terraces":"龙脊梯田","Reed Flute Cave":"芦笛岩","Ice and Snow World":"冰雪大世界","Saint Sophia Cathedral":"圣索菲亚大教堂","Central Street":"中央大街",
+  "Yabuli Ski Resort":"亚布力滑雪场","Siberian Tiger Park":"东北虎林园",
+};
 const DEFAULT_REGIONS=["ZJJ","CKG","AAT"];
 const COLORS={"Flights & trains":"#f87171","Lodging":"#38bdf8","Snowboarding":"#a5f3fc","Sights":"#f5c451","Food":"#34d399","Getting around & misc":"#c4b5fd"};
 /* ========================================================= */
@@ -350,6 +411,7 @@ const sel=new Set(DEFAULT_REGIONS), nights={}, open=new Set();
 for(const k in REGIONS) nights[k]=REGIONS[k].nights;
 const $=id=>document.getElementById(id);
 const fxr=()=>+$("fx").value||7.1;
+const zh=(n,cls="zh")=>ZH[n]?`<span class="${cls}" lang="zh-Hans">${ZH[n]}</span>`:"";
 const fmt=n=>"$"+Math.round(n).toLocaleString();
 const r10=n=>Math.round(n/10)*10;
 
@@ -428,7 +490,7 @@ function renderPicker(){
     const on=sel.has(k),alt=new Set(sel);on?alt.delete(k):alt.add(k);const d=Math.abs(now-total(alt,tier)),img=coverOf(k);
     return `<div class="rc ${on?"on":""}" data-r="${k}" role="button" tabindex="0" aria-pressed="${on}">
       <div class="ph" style="${img?`background-image:url('${img}')`:""}"><span class="check">${on?"✓":"+"}</span><span class="tagline">${r.tag}</span></div>
-      <div class="bd"><div class="nm">${r.emoji} ${r.name}</div><div class="dl">${on?"✓ In trip · costs "+fmt(d):"Adds +"+fmt(d)}</div>
+      <div class="bd"><div class="nm">${r.emoji} ${r.name}${zh(r.name)}</div><div class="dl">${on?"✓ In trip · costs "+fmt(d):"Adds +"+fmt(d)}</div>
       ${on?`<div class="step"><button data-n="${k}" data-d="-1" aria-label="fewer nights">−</button><span>${nights[k]} night${nights[k]>1?"s":""}</span><button data-n="${k}" data-d="1" aria-label="more nights">+</button></div>`:`<div class="hint">${r.nights} night${r.nights>1?"s":""} · ${r.blurb}</div>`}
       </div></div>`}).join("");
   const w=$("warn");w.className="warn"+(P.over?" show":"");
@@ -442,7 +504,7 @@ function renderRoute(){
   let day=7,prev=null;
   $("days").innerHTML=stops.map(s=>{const a=day;day+=s.n;let how="";
     if(prev){const l=leg(prev,s.c);how=`<span class="how">${l.mode} ${l.time}</span>`}prev=s.c;
-    return `<div class="day ${s.ski?"ski":""} ${s.home?"home":""}"><div class="dow">${s.n?`Dec ${a} – ${day}`:`Dec ${a}`} · ${s.n}n</div><div class="dt">${CITY[s.c]}${s.ski?" 🏂":""}</div><div class="ds">${s.d}</div>${how}</div>`}).join("")
+    return `<div class="day ${s.ski?"ski":""} ${s.home?"home":""}"><div class="dow">${s.n?`Dec ${a} – ${day}`:`Dec ${a}`} · ${s.n}n</div><div class="dt">${CITY[s.c]}${zh(CITY[s.c])}${s.ski?" 🏂":""}</div><div class="ds">${s.d}</div>${how}</div>`}).join("")
     +`<div class="day home"><div class="dow">Dec ${day}</div><div class="dt">Fly home ✈</div><div class="ds">PVG → ${origin}</div></div>`;
   $("routeh").textContent=stops.length===1?"Shanghai, all in":stops.length+" stops, one loop";
 }
@@ -465,13 +527,13 @@ function renderCosts(){
 }
 function renderExplore(){
   const keys=["SHA",...Object.keys(REGIONS)];
-  $("tabs").innerHTML=keys.map(k=>`<button class="${k===xtab?"on":""} ${k==="SHA"||sel.has(k)?"in":""}" data-x="${k}">${k==="SHA"?SHANGHAI.emoji+" Shanghai":REGIONS[k].emoji+" "+REGIONS[k].name}</button>`).join("");
+  $("tabs").innerHTML=keys.map(k=>`<button class="${k===xtab?"on":""} ${k==="SHA"||sel.has(k)?"in":""}" data-x="${k}">${k==="SHA"?SHANGHAI.emoji+" Shanghai"+zh("Shanghai"):REGIONS[k].emoji+" "+REGIONS[k].name+zh(REGIONS[k].name)}</button>`).join("");
   const r=xtab==="SHA"?SHANGHAI:REGIONS[xtab],inTrip=xtab==="SHA"||sel.has(xtab);
   const btn=xtab==="SHA"?"":`<button class="addbtn ${inTrip?"rm":""}" data-add="${xtab}">${inTrip?"✓ In trip · remove":"+ Add "+r.name+" to trip"}</button>`;
-  $("xbody").innerHTML=`<div class="xhead"><div><h3>${r.emoji} ${r.name}</h3><p>${xtab==="SHA"?"Home base: 2 nights at the start, the rest at the end. Free bed at your friend's place.":r.blurb+" · "+r.nights+" night"+(r.nights>1?"s":"")+" suggested"}</p></div>${btn}</div>
+  $("xbody").innerHTML=`<div class="xhead"><div><h3>${r.emoji} ${r.name}${zh(r.name)}</h3><p>${xtab==="SHA"?"Home base: 2 nights at the start, the rest at the end. Free bed at your friend's place.":r.blurb+" · "+r.nights+" night"+(r.nights>1?"s":"")+" suggested"}</p></div>${btn}</div>
     <div class="xgrid">${r.explore.map(x=>{const u=x[4];return `<a class="xc" href="${x[1]}" target="_blank" rel="noopener">
       <div class="ph">${u?`<span class="fb">${r.emoji}</span><img src="${u}" alt="${x[0]}" loading="lazy" decoding="async" onerror="this.remove()">`:`<span class="fb">${r.emoji}</span>`}</div>
-      <div class="bd"><h4>${x[0]}</h4><p>${x[2]}</p><span class="tip">${x[3]}</span></div></a>`}).join("")}</div>`;
+      <div class="bd"><h4>${x[0]}${zh(x[0])}</h4><p>${x[2]}</p><span class="tip">${x[3]}</span></div></a>`}).join("")}</div>`;
 }
 function renderAll(){renderTop();renderPicker();renderRoute();renderCosts();renderExplore()}
 
@@ -492,6 +554,29 @@ document.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.tar
 $("fx").addEventListener("input",renderAll);
 new IntersectionObserver(([en])=>$("dock").classList.toggle("show",!en.isIntersecting)).observe($("top"));
 renderAll();
+
+/* ---------- hero effects ---------- */
+(()=>{
+  const hero=$("top"),bg=$("herobg"),still=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const url=getComputedStyle(bg).backgroundImage.slice(5,-2),img=new Image();
+  img.onload=img.onerror=()=>hero.classList.add("loaded");img.src=url;
+  setTimeout(()=>hero.classList.add("loaded"),4000);
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{rootMargin:"0px 0px -10% 0px"});
+  document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+  if(still) return;
+  let visible=true;
+  new IntersectionObserver(([e])=>visible=e.isIntersecting).observe(hero);
+  addEventListener("scroll",()=>{if(visible)bg.style.translate="0 "+(scrollY*.35)+"px"},{passive:true});
+  // drifting snow
+  const cv=$("snow"),cx=cv.getContext("2d");let W,H,flakes=[];
+  const size=()=>{const d=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*d;cv.height=H*d;cx.setTransform(d,0,0,d,0,0);
+    const n=Math.round(Math.min(160,W*H/9000));flakes=Array.from({length:n},()=>mk(Math.random()*H))};
+  const mk=y=>{const z=Math.random();return{x:Math.random()*W,y,r:.6+z*2.4,v:.25+z*.9,a:.25+z*.6,p:Math.random()*6.28,w:.3+Math.random()*.8}};
+  size();addEventListener("resize",size);
+  let t=0;(function tick(){requestAnimationFrame(tick);if(!visible||document.hidden)return;t+=.01;cx.clearRect(0,0,W,H);
+    for(const f of flakes){f.y+=f.v;f.x+=Math.sin(t*f.w+f.p)*.4+.15;if(f.y>H+5){Object.assign(f,mk(-5))}if(f.x>W+5)f.x=-5;
+      cx.beginPath();cx.arc(f.x,f.y,f.r,0,6.28);cx.fillStyle=`rgba(255,255,255,${f.a})`;cx.fill()}})();
+})();
 </script>
 </body>
 </html>
