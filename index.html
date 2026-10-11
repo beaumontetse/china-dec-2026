@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>China · Dec 6–19, 2026 · Trip Budget</title>
+<meta name="description" content="Pick your regions, see what the China trip costs, and browse what to do in each.">
+<meta name="theme-color" content="#071526">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏂</text></svg>">
+<style>
+:root{--ink:#0b1e33;--deep:#071526;--muted:#c9d8ea;--accent:#38bdf8;--gold:#f5c451;--ok:#34d399;--red:#f87171;--glass:rgba(255,255,255,.08);--line:rgba(255,255,255,.14)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--deep);color:#fff;overflow-x:hidden;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased;padding-bottom:84px}
+button{font:inherit;color:inherit;-webkit-tap-highlight-color:transparent}
+h1{font-size:clamp(48px,10vw,132px);line-height:.92;margin:0;font-weight:900;letter-spacing:-.04em;text-transform:uppercase}
+h2{font-size:clamp(32px,5vw,64px);line-height:1.02;margin:0 0 10px;font-weight:900;letter-spacing:-.025em}
+.kicker{font-size:clamp(12px,1.3vw,15px);text-transform:uppercase;letter-spacing:.28em;color:var(--accent);font-weight:800;margin:0 0 16px}
+.sub{font-size:clamp(16px,1.8vw,22px);color:var(--muted);max-width:780px;margin:14px 0 0;line-height:1.45}
+.lede{color:var(--muted);font-size:16px;margin:0 0 22px;max-width:720px;line-height:1.5}
+.grad{background:linear-gradient(90deg,var(--gold),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(16px,5vw,56px)}
+.hero{padding:clamp(64px,12vh,130px) 0 56px;background:radial-gradient(1000px 600px at 85% 0%,rgba(56,189,248,.16),transparent),radial-gradient(900px 500px at 0% 100%,rgba(245,196,81,.1),transparent),var(--ink)}
+.panel{padding:clamp(56px,9vh,100px) 0}
+.panel.alt{background:radial-gradient(1000px 600px at 10% 0%,rgba(245,196,81,.07),transparent),var(--ink)}
+
+/* origin + tiers */
+.seg{display:inline-flex;gap:4px;padding:5px;border-radius:999px;background:var(--glass);border:1px solid var(--line);margin-top:32px}
+.seg button{font-weight:800;font-size:15px;color:#ffffffb3;cursor:pointer;padding:10px 18px;border-radius:999px;border:0;background:none;transition:all .2s;line-height:1.15}
+.seg button small{display:block;font-size:11px;font-weight:600;opacity:.75}
+.seg button.on{color:var(--ink);background:linear-gradient(90deg,var(--gold),var(--accent))}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px;max-width:880px}
+.tier{text-align:left;cursor:pointer;border-radius:20px;padding:16px 18px;background:var(--glass);border:1px solid var(--line);transition:transform .2s,border-color .2s}
+.tier small{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:800}
+.tier b{display:block;font-size:clamp(26px,3.6vw,44px);font-weight:900;margin-top:4px;font-variant-numeric:tabular-nums}
+.tier.on{border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}.tier.on b{color:var(--ok)}
+.cmp{margin:14px 0 0;color:var(--muted);font-size:14px}.cmp b{color:#fff}
+.fxrow{margin-top:10px;color:#ffffff80;font-size:13px}
+.fxrow input{width:64px;font:inherit;color:#fff;background:var(--glass);border:1px solid var(--line);border-radius:999px;padding:3px 10px;margin:0 4px}
+
+/* region picker */
+.meter{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:6px 0 20px}
+.meter .track{flex:1;min-width:180px;height:10px;border-radius:999px;background:#ffffff14;overflow:hidden}
+.meter .fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--accent));transition:width .35s}
+.meter.over .fill{background:var(--red)}
+.meter .lbl{font-size:14px;font-weight:800;font-variant-numeric:tabular-nums}
+.meter.over .lbl{color:var(--red)}
+.picker{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.rc{position:relative;border-radius:20px;overflow:hidden;background:#ffffff0d;border:1px solid var(--line);cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s;display:flex;flex-direction:column}
+.rc:hover{transform:translateY(-3px)}
+.rc .ph{position:relative;aspect-ratio:16/10;background:linear-gradient(135deg,#123a5c,#0b1e33);background-size:cover;background-position:center}
+.rc .ph:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,#071526cc)}
+.rc .check{position:absolute;top:10px;right:10px;z-index:2;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:900;background:#071526b3;border:2px solid #ffffff80;font-size:15px}
+.rc.on{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.rc.on .check{background:var(--accent);border-color:var(--accent);color:var(--ink)}
+.rc .tagline{position:absolute;left:12px;bottom:8px;z-index:2;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.rc .bd{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.rc .nm{font-size:19px;font-weight:900;line-height:1.15}
+.rc .dl{font-size:13px;color:var(--muted);font-weight:700}
+.rc.on .dl{color:var(--ok)}
+.rc .hint{font-size:13px;color:#ffffff80;font-weight:600}
+.step{display:flex;align-items:center;gap:6px;margin-top:auto}
+.step button{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#ffffff14;font-size:18px;font-weight:800;cursor:pointer;line-height:1}
+.step span{font-size:14px;font-weight:800;min-width:74px;text-align:center}
+.warn{margin-top:16px;padding:14px 18px;border-radius:16px;background:#f871711f;border:1px solid #f8717180;color:#fecaca;font-size:15px;display:none}
+.warn.show{display:block}
+
+/* route */
+.days{display:flex;gap:12px;margin-top:28px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory}
+.day{flex:1 0 170px;scroll-snap-align:start;border-radius:20px;padding:18px;background:var(--glass);border:1px solid var(--line)}
+.day .dow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:800}
+.day .dt{font-size:22px;font-weight:900;margin:8px 0 6px}
+.day .ds{font-size:14px;color:var(--muted);line-height:1.4}
+.day .how{display:inline-block;margin-top:10px;font-size:12px;font-weight:800;padding:4px 10px;border-radius:999px;background:#ffffff14}
+.day.ski{border-color:var(--accent)}.day.ski .dt{color:var(--accent)}
+.day.home .dt{color:var(--ok)}
+
+/* costs */
+.bar{display:flex;height:14px;border-radius:999px;overflow:hidden;margin:30px 0 12px;background:#ffffff14}
+.bar div{transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.legend{display:flex;flex-wrap:wrap;gap:8px}
+.legend span{font-size:13px;font-weight:700;padding:6px 12px;border-radius:999px;background:#ffffff14;border:1px solid var(--line)}
+.legend i,.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px}
+.cost{margin-top:22px}
+.cost-row{padding:18px 0;border-bottom:1px solid var(--line)}
+.cost-head{display:flex;justify-content:space-between;align-items:center;gap:16px;cursor:pointer}
+.cost-head b{font-size:clamp(18px,2.1vw,26px)}
+.cost-head .amt{font-size:clamp(22px,2.8vw,36px);font-weight:900;font-variant-numeric:tabular-nums;white-space:nowrap}
+.chev{color:var(--muted);font-size:12px;margin-left:10px;transition:transform .2s;display:inline-block}
+.cost-row.open .chev{transform:rotate(90deg)}
+.items{display:none;margin-top:12px}.cost-row.open .items{display:block}
+.item{display:flex;justify-content:space-between;gap:14px;padding:9px 0 9px 14px;border-left:3px solid var(--line)}
+.item .l{font-size:15px;font-weight:700}
+.item .n{display:block;font-size:13px;color:var(--muted);font-weight:400;margin-top:2px}
+.item .v{text-align:right;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+.item .v small{display:block;color:var(--muted);font-weight:500;font-size:12px}
+.cost-row.total{border:none;padding-top:30px}.cost-row.total .cost-head{cursor:default}
+.cost-row.total .amt{font-size:clamp(44px,7vw,84px);color:var(--ok);text-shadow:0 0 40px rgba(52,211,153,.35)}
+
+/* explore */
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 12px;margin:24px -2px 10px;scrollbar-width:none;scroll-snap-type:x proximity}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:none;scroll-snap-align:start;cursor:pointer;font-weight:800;font-size:15px;padding:10px 16px;border-radius:999px;background:#ffffff0f;border:1px solid var(--line);color:#ffffffbf;white-space:nowrap}
+.tabs button.in:before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ok);margin-right:8px;vertical-align:middle}
+.tabs button.on{background:#fff;color:var(--ink);border-color:#fff}
+.xhead{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin:10px 0 18px}
+.xhead h3{margin:0;font-size:clamp(28px,4vw,46px);font-weight:900;letter-spacing:-.02em}
+.xhead p{margin:6px 0 0;color:var(--muted);font-size:16px;max-width:620px}
+.addbtn{cursor:pointer;font-weight:900;font-size:15px;padding:12px 20px;border-radius:999px;border:0;color:var(--ink);background:linear-gradient(90deg,var(--gold),var(--accent))}
+.addbtn.rm{background:none;color:#fff;border:2px solid #ffffff59}
+.xgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.xc{border-radius:20px;overflow:hidden;background:#ffffff0d;border:1px solid var(--line);text-decoration:none;color:inherit;display:block;transition:transform .25s,border-color .25s}
+.xc:hover{transform:translateY(-4px);border-color:#f5c45180}
+.xc .ph{aspect-ratio:4/3;background:linear-gradient(135deg,#163e63,#0b1e33);position:relative;overflow:hidden}
+.xc .ph img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
+.xc:hover .ph img{transform:scale(1.04)}
+.xc .ph .fb{position:absolute;inset:0;display:grid;place-items:center;font-size:42px;opacity:.5}
+.xc .bd{padding:14px 16px 18px}
+.xc h4{margin:0 0 6px;font-size:18px;font-weight:900}
+.xc p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}
+.xc .tip{display:inline-block;margin-top:10px;font-size:12px;font-weight:800;color:var(--gold)}
+.credit{margin-top:18px;font-size:12px;color:#ffffff73}
+
+/* sticky summary */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:10px clamp(12px,4vw,40px) calc(10px + env(safe-area-inset-bottom));background:#071526e6;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px;transform:translateY(110%);transition:transform .3s}
+.dock.show{transform:none}
+.dock .t{font-size:24px;font-weight:900;color:var(--ok);font-variant-numeric:tabular-nums;line-height:1}
+.dock .s{font-size:12px;color:var(--muted);margin-top:3px}
+.dock .s.over{color:var(--red)}
+.dock a{flex:none;text-decoration:none;color:#fff;font-weight:900;font-size:14px;padding:10px 16px;border-radius:999px;background:#ffffff1f;border:1px solid var(--line)}
+footer{padding:36px 0 40px;font-size:13px;color:#ffffff80}
+
+@media (max-width:980px){.picker{grid-template-columns:repeat(3,1fr)}.xgrid{grid-template-columns:1fr 1fr}}
+@media (max-width:700px){
+  .picker{grid-template-columns:1fr 1fr;gap:10px}
+  .rc .nm{font-size:16px}.rc .bd{padding:10px 12px 12px}.step button{width:32px;height:32px}.step span{min-width:56px;font-size:13px}
+  .tiers{gap:8px}.tier{padding:12px}.tier small{font-size:10px;letter-spacing:.12em}.tier b{font-size:22px}
+  .xgrid{grid-template-columns:1fr}
+  .seg button{padding:9px 14px;font-size:14px}
+  .cost-row.total .cost-head{flex-direction:column;align-items:flex-start;gap:6px}
+  .days{flex-direction:column;overflow:visible}.day{flex:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <p class="kicker" id="kick">Dec 6 – 19, 2026</p>
+    <h1>China <span class="grad">13 days</span></h1>
+    <p class="sub">Pick where you're flying from and which regions you're in for. Everything below re-prices live. Per person; Shanghai stays are free.</p>
+    <div class="seg" id="origin"></div>
+    <div class="tiers" id="tiers"></div>
+    <p class="cmp" id="cmp"></p>
+    <div class="fxrow">USD → CNY <input id="fx" type="number" step="0.05" value="7.10" inputmode="decimal"> · hotel rooms split 2 ways</div>
+  </div>
+</section>
+
+<section class="panel alt" id="build">
+  <div class="wrap">
+    <p class="kicker">Build the trip</p>
+    <h2>Tap to add a region</h2>
+    <p class="lede">You fly into Shanghai, spend 2 nights there, then loop out. That leaves 10 nights to spend elsewhere; any you don't use go back to the free bed in Shanghai. Stops are put in the cheapest order automatically.</p>
+    <div class="meter" id="meter"><span class="lbl" id="mlbl"></span><div class="track"><div class="fill" id="mfill"></div></div></div>
+    <div class="picker" id="picker"></div>
+    <div class="warn" id="warn"></div>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="wrap">
+    <p class="kicker">The route</p>
+    <h2 id="routeh">The loop</h2>
+    <div class="days" id="days"></div>
+  </div>
+</section>
+
+<section class="panel alt" id="costs">
+  <div class="wrap">
+    <p class="kicker">The damage</p>
+    <h2>Where the money goes</h2>
+    <div class="bar" id="bar"></div>
+    <div class="legend" id="legend"></div>
+    <div class="cost" id="cost"></div>
+  </div>
+</section>
+
+<section class="panel" id="explore">
+  <div class="wrap">
+    <p class="kicker">Explore</p>
+    <h2>What's there to do</h2>
+    <p class="lede">Browse each region. A green dot means it's in your trip. Tap a card to read more and see photo credits.</p>
+    <div class="tabs" id="tabs"></div>
+    <div id="xbody"></div>
+    <p class="credit">Photos from Wikimedia Commons under their respective free licenses. Tap a card for the source and credits.</p>
+  </div>
+</section>
+
+<footer><div class="wrap">Prices researched Oct 2026 from airline fare pages, park ticket offices and travel guides. Hotels and domestic legs are ranges, not quotes.</div></footer>
+
+<div class="dock" id="dock"><div><div class="t" id="dt"></div><div class="s" id="ds"></div></div><a href="#build">Edit regions</a></div>
+
+<script>
+/* ================== EDIT TRIP DATA HERE ==================
+   Money arrays are [budget, expected, comfortable].
+   Lodging is CNY per ROOM per night (split between people). */
+const NIGHTS=12, FIRST_SHANGHAI=2, PEOPLE_PER_ROOM=2;
+const ORIGINS={
+  SFO:{city:"San Francisco",note:"Economy, nonstop on United (~13h)",p:[750,1000,1400]},
+  JFK:{city:"New York",note:"Economy, usually 1 stop (~16–20h)",p:[950,1250,1700]},
+};
+const SHANGHAI={name:"Shanghai",tag:"Home base",emoji:"🌃",ll:[31.23,121.47],
+  sights:[["Shanghai","Shanghai Tower deck, Bund, museums, a water town",[200,450,900]]],
+  explore:[
+    ["The Bund","https://en.wikipedia.org/wiki/The_Bund","Colonial-era waterfront facing the Pudong skyline. Go after dark when it all lights up.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/The_Bund_2.jpg/960px-The_Bund_2.jpg"],
+    ["Yu Garden","https://en.wikipedia.org/wiki/Yu_Garden","Ming-dynasty garden of rockeries and zigzag bridges, wrapped in the old-town bazaar.","¥40","https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Shanghai_-_Yu_Garden_-_0035.jpg/960px-Shanghai_-_Yu_Garden_-_0035.jpg"],
+    ["Shanghai Tower","https://en.wikipedia.org/wiki/Shanghai_Tower","China's tallest building. The observation deck sits on the 118th floor.","~¥180","https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/20191114_Shanghai_Tower_%282%29.jpg/960px-20191114_Shanghai_Tower_%282%29.jpg"],
+    ["Zhujiajiao","https://en.wikipedia.org/wiki/Zhujiajiao","Canal water town about an hour out by metro: stone bridges, boats, street snacks.","Free to walk","https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/1_zhujiajiao_2023_aerial.jpg/960px-1_zhujiajiao_2023_aerial.jpg"],
+    ["Former French Concession","https://en.wikipedia.org/wiki/Wukang_Mansion","Plane-tree streets, cafés and the flatiron-shaped Wukang Mansion.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Wukang_Mansion_20251128.jpg/960px-Wukang_Mansion_20251128.jpg"],
+    ["Tianzifang","https://en.wikipedia.org/wiki/Tianzifang","A maze of shikumen lanes turned into shops, galleries and bars.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Shanghai_Tianzifang_%E4%B8%8A%E6%B5%B7%E7%94%B0%E5%AD%90%E5%9D%8A_-_panoramio.jpg/960px-Shanghai_Tianzifang_%E4%B8%8A%E6%B5%B7%E7%94%B0%E5%AD%90%E5%9D%8A_-_panoramio.jpg"],
+  ]};
+const REGIONS={
+  ZJJ:{name:"Zhangjiajie",tag:"Avatar mountains",emoji:"⛰️",ll:[29.35,110.55],nights:2,blurb:"Sandstone pillars + Tianmen",
+    room:[350,500,800],
+    sights:[["Zhangjiajie Forest Park","Low-season 4-day pass",[115,115,115]],["Tianmen Mountain","Incl. shuttle + escalators",[288,288,288]],["ZJJ extras","Bailong elevator, Tianzi cableway, Glass Bridge",[0,137,315]]],
+    explore:[
+      ["National Forest Park","https://en.wikipedia.org/wiki/Zhangjiajie_National_Forest_Park","The sandstone pillar forest that inspired Avatar's floating mountains. The ticket is good for 4 days.","¥115 in Dec","https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Piliers_de_gr%C3%A8s_des_monts_Tianzi%2C_Zhangjiajie_%282026%29.jpg/960px-Piliers_de_gr%C3%A8s_des_monts_Tianzi%2C_Zhangjiajie_%282026%29.jpg"],
+      ["Hallelujah Mountain","https://en.wikipedia.org/wiki/Southern_Sky_Column","The single pillar renamed after the film, up in the Yuanjiajie area.","In park ticket","https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/1_tianzishan_wulingyuan_zhangjiajie_2012.jpg/960px-1_tianzishan_wulingyuan_zhangjiajie_2012.jpg"],
+      ["Tianmen Mountain","https://en.wikipedia.org/wiki/Tianmen_Mountain","Heaven's Gate arch, the 999 steps and the cliffside glass walkways.","¥288","https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Tianmen_38330-Zhangjiajie_%2849047525877%29.jpg/960px-Tianmen_38330-Zhangjiajie_%2849047525877%29.jpg"],
+      ["Grand Canyon Glass Bridge","https://en.wikipedia.org/wiki/Zhangjiajie_Glass_Bridge","A 430 m glass-bottomed bridge strung across a canyon.","¥178 combo","https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/ZhangjiajieGlassByHighestBridges.jpg/960px-ZhangjiajieGlassByHighestBridges.jpg"],
+      ["Baofeng Lake","https://en.wikipedia.org/wiki/Baofeng_Lake","A quiet boat ride between cliffs, inside the Wulingyuan area.","~¥96","https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/%E5%BC%A0%E5%AE%B6%E7%95%8C%E5%9B%BD%E5%AE%B6%E6%A3%AE%E6%9E%97%E5%85%AC%E5%9B%AD-%E5%AE%9D%E5%B3%B0%E6%B9%96_-_panoramio.jpg/960px-%E5%BC%A0%E5%AE%B6%E7%95%8C%E5%9B%BD%E5%AE%B6%E6%A3%AE%E6%9E%97%E5%85%AC%E5%9B%AD-%E5%AE%9D%E5%B3%B0%E6%B9%96_-_panoramio.jpg"],
+    ]},
+  CKG:{name:"Chongqing",tag:"Cyberpunk hot pot",emoji:"🌶️",ll:[29.56,106.55],nights:2,blurb:"Hot pot, Hongyadong at night",
+    room:[300,450,800],
+    sights:[["Chongqing","Cable car, Hongyadong · Wulong Karst trip at top tier",[100,300,700]]],
+    explore:[
+      ["Hongyadong","https://en.wikipedia.org/wiki/Hongyadong","Stilted cliffside complex that glows gold at night. Very Spirited Away.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/202308_Hongya_Cave_at_night_from_Qiansimen_Bridge.jpg/960px-202308_Hongya_Cave_at_night_from_Qiansimen_Bridge.jpg"],
+      ["Liziba Station","https://en.wikipedia.org/wiki/Liziba_station","The monorail runs straight through an apartment building.","¥2–5 ride","https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/%E6%9D%8E%E5%AD%90%E5%9D%9D%E7%AB%99%E8%BD%BB%E8%BD%A8%E7%A9%BF%E6%A5%BC_0023.png/960px-%E6%9D%8E%E5%AD%90%E5%9D%9D%E7%AB%99%E8%BD%BB%E8%BD%A8%E7%A9%BF%E6%A5%BC_0023.png"],
+      ["Yangtze River Cableway","https://en.wikipedia.org/wiki/Yangtze_River_Cableway","A 1980s cable car across the river. Go at dusk.","~¥20","https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Chongqing_Changjiang_Cableway.jpg/960px-Chongqing_Changjiang_Cableway.jpg"],
+      ["Wulong Karst","https://en.wikipedia.org/wiki/Wulong_Karst","Giant natural bridges and sinkholes, about 2h out. A full day trip.","~¥300+","https://upload.wikimedia.org/wikipedia/commons/e/ef/Three_Natural_Bridges_CNS_2024_%286%29.png"],
+      ["Ciqikou","https://en.wikipedia.org/wiki/Ciqikou","Old riverside town of stone alleys, snacks and teahouses.","Free","https://upload.wikimedia.org/wikipedia/commons/e/e3/%E4%BA%BA%E5%A4%B4%E6%94%92%E5%8A%A8%E7%9A%84%E7%A3%81%E5%99%A8%E5%8F%A3.jpg"],
+    ]},
+  AAT:{name:"Altay",tag:"Powder",emoji:"🏂",ll:[47.84,88.14],nights:3,blurb:"Jiangjunshan, best snow in China",
+    room:[500,800,1400],
+    ski:{lift:[400,520,650],rent:[150,200,300],gear:[0,150,300],ride:[35,50,100]},
+    explore:[
+      ["Jiangjunshan","https://commons.wikimedia.org/wiki/File:Altay_China_horizon_-_Jiangjunshan_Ski_Resort.jpg","The ski hill sits right above Altay city: night skiing and sunset sessions.","~¥400–650/day","https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Altay_China_horizon_-_Jiangjunshan_Ski_Resort.jpg/960px-Altay_China_horizon_-_Jiangjunshan_Ski_Resort.jpg"],
+      ["Koktokay","https://commons.wikimedia.org/wiki/File:Irtysh_river_in_Koktokay_panorama_in_winter_time.jpg","China's highest resort with ~1,200 m vertical, about 2h from Altay.","~¥620/day","https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Irtysh_river_in_Koktokay_panorama_in_winter_time.jpg/960px-Irtysh_river_in_Koktokay_panorama_in_winter_time.jpg"],
+      ["Kanas Lake","https://en.wikipedia.org/wiki/Kanas_Lake","An alpine lake near the Russian border, frozen silent in winter.","Long day trip","https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Lake_Kanas.jpg/960px-Lake_Kanas.jpg"],
+      ["Hemu Village","https://commons.wikimedia.org/wiki/File:Hemu_River_and_Mongolian_Village.jpg","Wooden Tuvan cabins under snow, famous for misty winter mornings.","Overnight trip","https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Hemu_River_and_Mongolian_Village.jpg/960px-Hemu_River_and_Mongolian_Village.jpg"],
+      ["Altai Mountains","https://en.wikipedia.org/wiki/Altai_Mountains","Where skiing may have started: rock art here shows hunters on skis.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Altai_Mountains.jpg/960px-Altai_Mountains.jpg"],
+    ]},
+  PEK:{name:"Beijing",tag:"Great Wall",emoji:"🏯",ll:[39.90,116.40],nights:3,blurb:"Forbidden City + Mutianyu",
+    room:[400,650,1100],
+    sights:[["Beijing","Forbidden City ¥40, Mutianyu + toboggan, Temple of Heaven, Summer Palace",[220,350,650]]],
+    explore:[
+      ["Forbidden City","https://en.wikipedia.org/wiki/Forbidden_City","980 buildings of imperial palace. Book a timed slot with your passport.","¥40 off-season","https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/The_Forbidden_City_-_View_from_Coal_Hill.jpg/960px-The_Forbidden_City_-_View_from_Coal_Hill.jpg"],
+      ["Mutianyu Great Wall","https://en.wikipedia.org/wiki/Mutianyu","A restored section with a toboggan ride back down.","¥40 + ¥140 lift","https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Great_Wall_of_China_July_2006.JPG/960px-Great_Wall_of_China_July_2006.JPG"],
+      ["Temple of Heaven","https://en.wikipedia.org/wiki/Temple_of_Heaven","Ming-era altar complex, with tai chi crowds in the morning.","~¥30","https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Temple_of_Heaven_20160323_01.jpg/960px-Temple_of_Heaven_20160323_01.jpg"],
+      ["Summer Palace","https://en.wikipedia.org/wiki/Summer_Palace","Imperial lakeside garden. Kunming Lake freezes in December.","~¥20","https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Longevity_Hill_of_the_Summer_Palace.jpg/960px-Longevity_Hill_of_the_Summer_Palace.jpg"],
+      ["Jingshan Park","https://en.wikipedia.org/wiki/Jingshan_Park","The best view over the Forbidden City rooftops at sunset.","¥2","https://upload.wikimedia.org/wikipedia/commons/1/19/Jingshan_park.jpg"],
+      ["Hutongs","https://en.wikipedia.org/wiki/Hutong","Old alley neighborhoods, best explored by bike.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Beijing_hutong_area_3.jpg/960px-Beijing_hutong_area_3.jpg"],
+    ]},
+  SZX:{name:"Shenzhen",tag:"Future city",emoji:"🏙️",ll:[22.54,114.06],nights:2,blurb:"Skyline, tech, warm weather",
+    room:[350,550,900],
+    sights:[["Shenzhen","Ping An deck, OCT Loft, Window of the World at top tier",[80,220,500]]],
+    explore:[
+      ["Ping An Finance Centre","https://en.wikipedia.org/wiki/Ping_An_Finance_Center","A 599 m tower with an observation deck on the 116th floor.","~¥200","https://upload.wikimedia.org/wikipedia/commons/0/0d/Pingan_International_Finance_Center2020.jpg"],
+      ["Shenzhen Bay Park","https://en.wikipedia.org/wiki/Shenzhen_Bay_Park","13 km of waterfront park looking across to Hong Kong.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Shenzhen_Bay_Park_-_2019-12-09_-_2.jpg/960px-Shenzhen_Bay_Park_-_2019-12-09_-_2.jpg"],
+      ["Huaqiangbei","https://en.wikipedia.org/wiki/Huaqiangbei","The world's biggest electronics market. Gadgets you've never heard of.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Huaqiangbei%26Shennan_Cross2021.jpg/960px-Huaqiangbei%26Shennan_Cross2021.jpg"],
+      ["OCT Loft","https://commons.wikimedia.org/wiki/File:OCT_LOFT%2C_SHENZHEN_%2841%29.jpg","Old factories turned into a creative district of galleries and cafés.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/OCT_LOFT%2C_SHENZHEN_%2841%29.jpg/960px-OCT_LOFT%2C_SHENZHEN_%2841%29.jpg"],
+      ["Dafen Oil Painting Village","https://commons.wikimedia.org/wiki/File:Artists_at_work_in_Dafen_Oil_Painting_Village.jpg","Thousands of painters copying (and making) art in narrow lanes.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Artists_at_work_in_Dafen_Oil_Painting_Village.jpg/960px-Artists_at_work_in_Dafen_Oil_Painting_Village.jpg"],
+    ]},
+  WUH:{name:"Wuhan",tag:"River city",emoji:"🌉",ll:[30.59,114.30],nights:2,blurb:"Yangtze bridges + hot dry noodles",
+    room:[250,400,700],
+    sights:[["Wuhan","Yellow Crane Tower, museum (free), East Lake bike",[80,170,350]]],
+    explore:[
+      ["Yellow Crane Tower","https://en.wikipedia.org/wiki/Yellow_Crane_Tower","A famous pagoda over the Yangtze, written about in Tang poetry.","¥70","https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/CN_-_Hubei_-_Wuhan_-_Kranichpagode.jpg/960px-CN_-_Hubei_-_Wuhan_-_Kranichpagode.jpg"],
+      ["East Lake","https://en.wikipedia.org/wiki/East_Lake_(Wuhan)","A huge lake ringed by a long greenway. Rent a bike.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Mount_Mo_and_East_Lake%2C_Wuhan.jpg/960px-Mount_Mo_and_East_Lake%2C_Wuhan.jpg"],
+      ["Hubu Alley","https://commons.wikimedia.org/wiki/File:Hubu_Alley%2C_Wuchang%2C_Wuhan%2C_Hubei%2C_China%2C_430000_-_panoramio_%2868%29.jpg","Breakfast street. Get the hot dry noodles (reganmian).","Cheap eats","https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Hubu_Alley%2C_Wuchang%2C_Wuhan%2C_Hubei%2C_China%2C_430000_-_panoramio_%2868%29.jpg/960px-Hubu_Alley%2C_Wuchang%2C_Wuhan%2C_Hubei%2C_China%2C_430000_-_panoramio_%2868%29.jpg"],
+      ["Wuhan Yangtze River Bridge","https://en.wikipedia.org/wiki/Wuhan_Yangtze_River_Bridge","The first bridge ever built across the Yangtze, from 1957.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Wuhan_Yangtze_River_Bridge-1.jpg/960px-Wuhan_Yangtze_River_Bridge-1.jpg"],
+      ["Hubei Provincial Museum","https://en.wikipedia.org/wiki/Hubei_Provincial_Museum","Home of the Marquis Yi bronze bells, played live in short concerts.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Hubei_Provincial_Museum.JPG/960px-Hubei_Provincial_Museum.JPG"],
+    ]},
+  CTU:{name:"Chengdu",tag:"Pandas + Sichuan food",emoji:"🐼",ll:[30.66,104.07],nights:2,blurb:"Pandas, teahouses, Leshan Buddha",
+    room:[300,450,800],
+    sights:[["Chengdu","Panda Base ¥55, Leshan Buddha day trip, Sichuan opera at top tier",[100,260,550]]],
+    explore:[
+      ["Giant Panda Base","https://en.wikipedia.org/wiki/Chengdu_Research_Base_of_Giant_Panda_Breeding","Get there at opening when the pandas are awake and eating.","¥55","https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Panda_in_Chengdu_Research_Base_of_Giant_Panda_Breeding_-_7708872342.jpg/960px-Panda_in_Chengdu_Research_Base_of_Giant_Panda_Breeding_-_7708872342.jpg"],
+      ["Leshan Giant Buddha","https://en.wikipedia.org/wiki/Leshan_Giant_Buddha","A 71 m Buddha carved into a river cliff, about 1h by bullet train.","¥80","https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/36275-Leshan_%2849067653383%29.jpg/960px-36275-Leshan_%2849067653383%29.jpg"],
+      ["Kuanzhai Alley","https://commons.wikimedia.org/wiki/File:Street_scene_-_Kuanzhai_Alleys_-_Chengdu%2C_China_-_DSC05311.jpg","Restored Qing-dynasty lanes full of snacks and ear-cleaning stalls.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Street_scene_-_Kuanzhai_Alleys_-_Chengdu%2C_China_-_DSC05311.jpg/960px-Street_scene_-_Kuanzhai_Alleys_-_Chengdu%2C_China_-_DSC05311.jpg"],
+      ["Wenshu Monastery","https://commons.wikimedia.org/wiki/File:Hall_-_Wenshu_Monastery_-_Chengdu%2C_China_-_DSC05252.jpg","Working temple with a tea house where locals sit for hours.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Hall_-_Wenshu_Monastery_-_Chengdu%2C_China_-_DSC05252.jpg/960px-Hall_-_Wenshu_Monastery_-_Chengdu%2C_China_-_DSC05252.jpg"],
+      ["Mount Emei","https://en.wikipedia.org/wiki/Mount_Emei","Sacred mountain with a snowy summit in December.","Full day","https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/%E5%B3%A8%E7%9C%89%E5%B1%B1%E9%A3%8E%E6%99%AF%E5%8C%BA_Mount_Emei_Scenic_Area_07.jpg/960px-%E5%B3%A8%E7%9C%89%E5%B1%B1%E9%A3%8E%E6%99%AF%E5%8C%BA_Mount_Emei_Scenic_Area_07.jpg"],
+    ]},
+  XIY:{name:"Xi'an",tag:"Terracotta Army",emoji:"🗿",ll:[34.34,108.94],nights:2,blurb:"Warriors, city wall, street food",
+    room:[250,400,700],
+    sights:[["Xi'an","Terracotta Army ¥120, City Wall + bike · Mount Hua at top tier",[200,280,650]]],
+    explore:[
+      ["Terracotta Army","https://en.wikipedia.org/wiki/Terracotta_Army","Thousands of life-size clay soldiers guarding the first emperor's tomb.","¥120","https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/51714-Terracota-Army.jpg/960px-51714-Terracota-Army.jpg"],
+      ["City Wall","https://en.wikipedia.org/wiki/Fortifications_of_Xi%27an","Bike the full 14 km loop on top of the Ming city wall.","¥54 + bike","https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/City_wall_of_Xi%27an_51550-Xian_%2827959363326%29.jpg/960px-City_wall_of_Xi%27an_51550-Xian_%2827959363326%29.jpg"],
+      ["Muslim Quarter","https://commons.wikimedia.org/wiki/File:1_xian_muslim_quarter_china_2011.JPG","Night food street: roujiamo, biangbiang noodles, lamb skewers.","Cheap eats","https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/1_xian_muslim_quarter_china_2011.JPG/960px-1_xian_muslim_quarter_china_2011.JPG"],
+      ["Giant Wild Goose Pagoda","https://en.wikipedia.org/wiki/Giant_Wild_Goose_Pagoda","Tang-era pagoda with a fountain show out front.","~¥30","https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Giant_Wild_Goose_Pagoda.jpg/960px-Giant_Wild_Goose_Pagoda.jpg"],
+      ["Mount Hua","https://en.wikipedia.org/wiki/Mount_Hua","Granite peaks and the infamous plank walk, about 2h out.","~¥160 + cable car","https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Hua_Shan.jpg/960px-Hua_Shan.jpg"],
+    ]},
+  HGH:{name:"Hangzhou",tag:"West Lake",emoji:"🍵",ll:[30.27,120.15],nights:1,blurb:"West Lake, tea hills",
+    room:[350,550,900],
+    sights:[["Hangzhou","Lingyin Temple, lake boat, tea tasting",[80,150,300]]],
+    explore:[
+      ["West Lake","https://en.wikipedia.org/wiki/West_Lake","Willows, causeways and pagodas. Bike the loop or take a boat.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/West_Lake%2C_Hangzhou_2025.jpg/960px-West_Lake%2C_Hangzhou_2025.jpg"],
+      ["Lingyin Temple","https://en.wikipedia.org/wiki/Lingyin_Temple","One of China's largest Buddhist temples, set against carved cliffs.","~¥75","https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Lingyin_Temple%2C_Hangzhou_20161003.jpg/960px-Lingyin_Temple%2C_Hangzhou_20161003.jpg"],
+      ["Longjing tea villages","https://en.wikipedia.org/wiki/Longjing_tea","Hillside tea farms where Dragon Well tea is grown. Tastings in farmhouses.","~¥50","https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Longjing_tea.jpg/960px-Longjing_tea.jpg"],
+      ["Leifeng Pagoda","https://en.wikipedia.org/wiki/Leifeng_Pagoda","Rebuilt pagoda with a sunset view over the lake.","¥40","https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Leifeng_Pagoda_DJI_0593_%282%29.jpg/960px-Leifeng_Pagoda_DJI_0593_%282%29.jpg"],
+      ["Xixi Wetland","https://en.wikipedia.org/wiki/Xixi_National_Wetland_Park","Quiet waterways and boardwalks on the edge of the city.","~¥80","https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Xixi_Wetland_Park%2C_Hangzhou%2C_China.jpg/960px-Xixi_Wetland_Park%2C_Hangzhou%2C_China.jpg"],
+    ]},
+  KWL:{name:"Guilin · Yangshuo",tag:"Karst river",emoji:"🛶",ll:[25.27,110.29],nights:2,blurb:"Li River cruise, karst peaks",
+    room:[250,450,800],
+    sights:[["Guilin · Yangshuo","Li River cruise ¥215 (3★) / ¥360 (4★), Yulong raft, rice terraces at top tier",[280,450,850]]],
+    explore:[
+      ["Li River","https://en.wikipedia.org/wiki/Li_River_(Guangxi)","Cruise from Guilin to Yangshuo past the karst peaks on the ¥20 note.","¥215–360","https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/87318-Li-River.jpg/960px-87318-Li-River.jpg"],
+      ["Yangshuo","https://en.wikipedia.org/wiki/Yangshuo_County","Small town with countryside bike rides and rock climbing.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/1_guilin_yangshuo_2017.jpg/960px-1_guilin_yangshuo_2017.jpg"],
+      ["Yulong River","https://en.wikipedia.org/wiki/Yulong_River","A slow bamboo raft past old stone bridges.","~¥200","https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Yulong.JPG/960px-Yulong.JPG"],
+      ["Longji Rice Terraces","https://en.wikipedia.org/wiki/Longji_Rice_Terraces","Dragon's Backbone terraces carved up the mountainside, about 2h out.","~¥100","https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/LongshengRiceTerrace.jpg/960px-LongshengRiceTerrace.jpg"],
+      ["Reed Flute Cave","https://en.wikipedia.org/wiki/Reed_Flute_Cave","A limestone cave lit up in neon.","~¥90","https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Stone_curtains_on_display_at_Reed_Flute_Cave.JPG/960px-Stone_curtains_on_display_at_Reed_Flute_Cave.JPG"],
+    ]},
+  HRB:{name:"Harbin",tag:"Ice city",emoji:"❄️",ll:[45.80,126.53],nights:2,blurb:"Ice & Snow World, Russian old town",
+    room:[300,500,900],
+    sights:[["Harbin","Ice & Snow World ¥328, St Sophia ¥20 · Yabuli ski day at top tier",[350,450,1100]]],
+    explore:[
+      ["Ice and Snow World","https://en.wikipedia.org/wiki/Harbin_Ice_and_Snow_World","A city of giant ice buildings lit up at night. It opened Dec 17 last season, so end the loop here.","¥328","https://upload.wikimedia.org/wikipedia/commons/6/63/Harbin_Ice_Festival.jpg"],
+      ["Saint Sophia Cathedral","https://en.wikipedia.org/wiki/Saint_Sophia_Cathedral,_Harbin","Russian Orthodox church with a green onion dome.","¥20 inside","https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/West_facade_of_St._Sophia_Cathedral%2C_Harbin_%2820230721150450%29.jpg/960px-West_facade_of_St._Sophia_Cathedral%2C_Harbin_%2820230721150450%29.jpg"],
+      ["Central Street","https://en.wikipedia.org/wiki/Central_Street_(Harbin)","Cobblestone pedestrian street with Russian-era architecture.","Free","https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Central_Street%2C_Harbin_16.jpg/960px-Central_Street%2C_Harbin_16.jpg"],
+      ["Yabuli Ski Resort","https://en.wikipedia.org/wiki/Yabuli_Ski_Resort","China's best-known ski resort, about 3h out. Long day trip.","~¥700 w/ rental","https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Sun_Mountain_Yabuli.jpg/960px-Sun_Mountain_Yabuli.jpg"],
+      ["Siberian Tiger Park","https://en.wikipedia.org/wiki/Harbin_Siberian_Tiger_Park","Ride a bus through enclosures of Siberian tigers.","~¥100","https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Panthera_tigris_altaica_%E6%9D%B1%E5%8C%97%E8%99%8E_-_panoramio.jpg/960px-Panthera_tigris_altaica_%E6%9D%B1%E5%8C%97%E8%99%8E_-_panoramio.jpg"],
+    ]},
+};
+// Researched domestic legs (CNY). Anything not listed is estimated from distance.
+const LEGS={
+  "SHA-ZJJ":["✈","~2h",[500,800,1200]], "SHA-CKG":["✈","~2.5h",[600,900,1400]], "SHA-AAT":["✈","~5h",[1300,2200,3200]],
+  "ZJJ-CKG":["🚄","~2h",[191,220,261]], "ZJJ-AAT":["✈","1 stop",[1300,2100,3200]], "CKG-AAT":["✈","~4h direct",[1000,1700,2800]],
+  "SHA-HGH":["🚄","~1h",[73,80,120]], "SHA-PEK":["🚄","~4.5h",[550,600,950]],
+};
+const DEFAULT_REGIONS=["ZJJ","CKG","AAT"];
+const COLORS={"Flights & trains":"#f87171","Lodging":"#38bdf8","Snowboarding":"#a5f3fc","Sights":"#f5c451","Food":"#34d399","Getting around & misc":"#c4b5fd"};
+/* ========================================================= */
+
+const TIERS=["Budget","Expected","Comfortable"];
+const CITY=Object.fromEntries([["SHA","Shanghai"],...Object.entries(REGIONS).map(([k,r])=>[k,r.name])]);
+const LL=Object.fromEntries([["SHA",SHANGHAI.ll],...Object.entries(REGIONS).map(([k,r])=>[k,r.ll])]);
+let tier=1, origin="SFO", xtab="SHA";
+const sel=new Set(DEFAULT_REGIONS), nights={}, open=new Set();
+for(const k in REGIONS) nights[k]=REGIONS[k].nights;
+const $=id=>document.getElementById(id);
+const fxr=()=>+$("fx").value||7.1;
+const fmt=n=>"$"+Math.round(n).toLocaleString();
+const r10=n=>Math.round(n/10)*10;
+
+function km(a,b){const[t1,g1]=LL[a].map(x=>x*Math.PI/180),[t2,g2]=LL[b].map(x=>x*Math.PI/180);
+  return 6371*2*Math.asin(Math.sqrt(Math.sin((t2-t1)/2)**2+Math.cos(t1)*Math.cos(t2)*Math.sin((g2-g1)/2)**2))}
+const legCache={};
+function leg(a,b){
+  const key=a+"-"+b; if(legCache[key]) return legCache[key];
+  const L=LEGS[key]||LEGS[b+"-"+a]; let out;
+  if(L) out={mode:L[0],time:L[1],p:L[2],est:false};
+  else{const d=km(a,b),rail=d*1.3,th=rail/280+.3;
+    if(a!=="AAT"&&b!=="AAT"&&th<=5) out={mode:"🚄",time:"~"+(Math.round(th*2)/2)+"h",p:[.46,.5,.8].map(x=>r10(rail*x)),est:true};
+    else{const e=400+.5*d;out={mode:"✈",time:"~"+(Math.round((d/700+.7)*2)/2)+"h",p:[r10(e*.6),r10(e),r10(e*1.5)],est:true}}}
+  return legCache[key]=out;
+}
+function perms(a){if(a.length<=1)return[a];const o=[];a.forEach((x,i)=>perms([...a.slice(0,i),...a.slice(i+1)]).forEach(p=>o.push([x,...p])));return o}
+function bestOrder(codes){
+  if(codes.length<=1) return codes;
+  let best=codes,bc=1e9;
+  for(const p of (codes.length<=7?perms(codes):[codes])){
+    const path=["SHA",...p,"SHA"];let c=0;for(let i=0;i<path.length-1;i++)c+=leg(path[i],path[i+1]).p[1];
+    if(p.includes("HRB")&&p[p.length-1]!=="HRB") c+=600; // Ice World opens mid-Dec: keep Harbin last
+    if(c<bc){bc=c;best=p}}
+  return best;
+}
+function plan(regs){
+  const codes=bestOrder(Object.keys(REGIONS).filter(k=>regs.has(k)));
+  const away=codes.reduce((s,k)=>s+nights[k],0);
+  return{codes,away,over:Math.max(0,away-(NIGHTS-FIRST_SHANGHAI)),shaEnd:Math.max(0,NIGHTS-FIRST_SHANGHAI-away)};
+}
+function build(regs){
+  const D={};Object.keys(COLORS).forEach(c=>D[c]=[]);
+  const o=ORIGINS[origin],P=plan(regs),{codes}=P,n=codes.length;
+  D["Flights & trains"].push([origin+" ⇄ PVG round trip",o.note,"USD",o.p]);
+  const path=["SHA",...codes,"SHA"];
+  if(n) for(let i=0;i<path.length-1;i++){const l=leg(path[i],path[i+1]);
+    D["Flights & trains"].push([CITY[path[i]]+" → "+CITY[path[i+1]],(l.mode==="🚄"?"Bullet train ":"Flight ")+l.time+(l.est?" · estimated":""),"CNY",l.p])}
+  D["Lodging"].push(["Shanghai · "+(n?FIRST_SHANGHAI+P.shaEnd:NIGHTS)+" nights","Friend's place","CNY",[0,0,0]]);
+  for(const k of codes){const r=REGIONS[k],nn=nights[k];
+    D["Lodging"].push([r.name+" · "+nn+" night"+(nn>1?"s":""),"¥"+r.room[0]+"–"+r.room[2]+"/room/night, split "+PEOPLE_PER_ROOM,"CNY",r.room.map(x=>x*nn/PEOPLE_PER_ROOM)]);
+    if(r.ski){const d=Math.max(1,nn-.5),dd=Math.ceil(d);
+      D["Snowboarding"].push(["Lift tickets · ~"+d+" days","~¥"+r.ski.lift[0]+"–"+r.ski.lift[2]+"/day","CNY",r.ski.lift.map(x=>x*d)],
+        ["Board + boots + helmet",dd+" days rental","CNY",r.ski.rent.map(x=>x*dd)],
+        ["Jacket / pants rental","Skip if you bring your own","CNY",r.ski.gear],
+        ["Hotel ⇄ resort","Taxi / shuttle","CNY",r.ski.ride.map(x=>x*dd)]);}
+    for(const s of r.sights||[]) D["Sights"].push([s[0],s[1],"CNY",s[2]]);}
+  for(const s of SHANGHAI.sights) D["Sights"].push([s[0],s[1],"CNY",s[2]]);
+  D["Food"].push(["Meals · "+NIGHTS+" days","¥150 / ¥250 / ¥400 a day","CNY",[150,250,400].map(x=>x*NIGHTS)]);
+  D["Getting around & misc"].push(["Metro, DiDi, airport transfers",n?(n+1)+" cities":"Shanghai only","CNY",[250+50*n,460+80*n,700+130*n]],
+    ["China L visa","Required for US passports","USD",[140,140,140]],["eSIM / data","~12 days","USD",[15,25,40]],
+    ["Travel insurance",regs.has("AAT")||regs.has("HRB")?"Covers ski injury at top tier":"","USD",[40,70,120]],["Buffer / souvenirs","","USD",[50,100,250]]);
+  for(const c in D) if(!D[c].length) delete D[c];
+  return D;
+}
+const usd=(i,t)=>i[2]==="USD"?i[3][t]:i[3][t]/fxr();
+function totals(D,t){let all=0,cats={};for(const c in D){cats[c]=D[c].reduce((s,i)=>s+usd(i,t),0);all+=cats[c]}return{all,cats}}
+const total=(regs,t)=>totals(build(regs),t).all;
+
+/* ---------- photos: Wikimedia Commons (static URLs in the data above) ---------- */
+const coverOf=k=>(k==="SHA"?SHANGHAI:REGIONS[k]).explore[0][4];
+
+/* ---------- render ---------- */
+function renderTop(){
+  $("kick").textContent="Dec 6 – 19, 2026 · "+origin+" ⇄ PVG";
+  $("origin").innerHTML=Object.entries(ORIGINS).map(([k,o])=>`<button class="${k===origin?"on":""}" data-o="${k}">From ${k}<small>${o.city}</small></button>`).join("");
+  $("tiers").innerHTML=TIERS.map((n,i)=>`<button class="tier ${i===tier?"on":""}" data-t="${i}"><small>${n}</small><b>${fmt(total(sel,i))}</b></button>`).join("");
+  const other=origin==="SFO"?"JFK":"SFO",d=ORIGINS[other].p[tier]-ORIGINS[origin].p[tier];
+  $("cmp").innerHTML=`From <b>${other}</b> it's about <b>${fmt(Math.abs(d))} ${d>0?"more":"less"}</b> at this tier. Only the flight changes.`;
+}
+function renderPicker(){
+  const P=plan(sel),cap=NIGHTS-FIRST_SHANGHAI,now=total(sel,tier);
+  $("meter").className="meter"+(P.over?" over":"");
+  $("mlbl").textContent=`${P.away} of ${cap} nights away`+(P.over?` · ${P.over} too many`:` · ${P.shaEnd} back in Shanghai`);
+  $("mfill").style.width=Math.min(100,P.away/cap*100)+"%";
+  $("picker").innerHTML=Object.entries(REGIONS).map(([k,r])=>{
+    const on=sel.has(k),alt=new Set(sel);on?alt.delete(k):alt.add(k);const d=Math.abs(now-total(alt,tier)),img=coverOf(k);
+    return `<div class="rc ${on?"on":""}" data-r="${k}" role="button" tabindex="0" aria-pressed="${on}">
+      <div class="ph" style="${img?`background-image:url('${img}')`:""}"><span class="check">${on?"✓":"+"}</span><span class="tagline">${r.tag}</span></div>
+      <div class="bd"><div class="nm">${r.emoji} ${r.name}</div><div class="dl">${on?"✓ In trip · costs "+fmt(d):"Adds +"+fmt(d)}</div>
+      ${on?`<div class="step"><button data-n="${k}" data-d="-1" aria-label="fewer nights">−</button><span>${nights[k]} night${nights[k]>1?"s":""}</span><button data-n="${k}" data-d="1" aria-label="more nights">+</button></div>`:`<div class="hint">${r.nights} night${r.nights>1?"s":""} · ${r.blurb}</div>`}
+      </div></div>`}).join("");
+  const w=$("warn");w.className="warn"+(P.over?" show":"");
+  w.textContent=P.over?`That's ${P.away} nights away but there are only ${cap} between Dec 9 and Dec 19. Drop a region or trim nights; as is, the trip runs ${P.over} night${P.over>1?"s":""} past Dec 19.`:"";
+}
+function renderRoute(){
+  const P=plan(sel),{codes}=P;
+  const stops=[{c:"SHA",n:codes.length?FIRST_SHANGHAI:NIGHTS,d:codes.length?"SFO and JFK crews meet at PVG":"Base camp the whole trip; day trips to Hangzhou or Suzhou"}];
+  codes.forEach(k=>stops.push({c:k,n:nights[k],d:REGIONS[k].blurb,ski:!!REGIONS[k].ski}));
+  if(codes.length) stops.push({c:"SHA",n:P.shaEnd,d:P.shaEnd?"Free bed, Bund, last dinners":"Straight to the airport",home:1});
+  let day=7,prev=null;
+  $("days").innerHTML=stops.map(s=>{const a=day;day+=s.n;let how="";
+    if(prev){const l=leg(prev,s.c);how=`<span class="how">${l.mode} ${l.time}</span>`}prev=s.c;
+    return `<div class="day ${s.ski?"ski":""} ${s.home?"home":""}"><div class="dow">${s.n?`Dec ${a} – ${day}`:`Dec ${a}`} · ${s.n}n</div><div class="dt">${CITY[s.c]}${s.ski?" 🏂":""}</div><div class="ds">${s.d}</div>${how}</div>`}).join("")
+    +`<div class="day home"><div class="dow">Dec ${day}</div><div class="dt">Fly home ✈</div><div class="ds">PVG → ${origin}</div></div>`;
+  $("routeh").textContent=stops.length===1?"Shanghai, all in":stops.length+" stops, one loop";
+}
+function renderCosts(){
+  const D=build(sel),{all,cats}=totals(D,tier),E=Object.keys(D);
+  $("bar").innerHTML=E.map(c=>`<div style="width:${cats[c]/all*100}%;background:${COLORS[c]}"></div>`).join("");
+  $("legend").innerHTML=E.map(c=>`<span><i style="background:${COLORS[c]}"></i>${c} · ${Math.round(cats[c]/all*100)}%</span>`).join("");
+  let h="";
+  for(const c of E){
+    h+=`<div class="cost-row ${open.has(c)?"open":""}" data-c="${c}"><div class="cost-head"><b><span class="dot" style="background:${COLORS[c]}"></span>${c}<span class="chev">▶</span></b><span class="amt">${fmt(cats[c])}</span></div><div class="items">`;
+    for(const i of D[c]){const v=Math.round(i[3][tier]);h+=`<div class="item"><div class="l">${i[0]}${i[1]?`<span class="n">${i[1]}</span>`:""}</div><div class="v">${fmt(usd(i,tier))}${i[2]==="CNY"&&v?`<small>¥${v.toLocaleString()}</small>`:""}</div></div>`}
+    h+=`</div></div>`;
+  }
+  h+=`<div class="cost-row total"><div class="cost-head"><b>${TIERS[tier]} · per person</b><span class="amt">${fmt(all)}</span></div></div>`;
+  $("cost").innerHTML=h;
+  const P=plan(sel);
+  $("dt").textContent=fmt(all);
+  $("ds").className="s"+(P.over?" over":"");
+  $("ds").textContent=`${TIERS[tier]} · from ${origin} · `+(P.codes.length?P.codes.map(k=>REGIONS[k].name.split(" ")[0]).join(" → "):"Shanghai only")+(P.over?` · ${P.over} nights over`:"");
+}
+function renderExplore(){
+  const keys=["SHA",...Object.keys(REGIONS)];
+  $("tabs").innerHTML=keys.map(k=>`<button class="${k===xtab?"on":""} ${k==="SHA"||sel.has(k)?"in":""}" data-x="${k}">${k==="SHA"?SHANGHAI.emoji+" Shanghai":REGIONS[k].emoji+" "+REGIONS[k].name}</button>`).join("");
+  const r=xtab==="SHA"?SHANGHAI:REGIONS[xtab],inTrip=xtab==="SHA"||sel.has(xtab);
+  const btn=xtab==="SHA"?"":`<button class="addbtn ${inTrip?"rm":""}" data-add="${xtab}">${inTrip?"✓ In trip · remove":"+ Add "+r.name+" to trip"}</button>`;
+  $("xbody").innerHTML=`<div class="xhead"><div><h3>${r.emoji} ${r.name}</h3><p>${xtab==="SHA"?"Home base: 2 nights at the start, the rest at the end. Free bed at your friend's place.":r.blurb+" · "+r.nights+" night"+(r.nights>1?"s":"")+" suggested"}</p></div>${btn}</div>
+    <div class="xgrid">${r.explore.map(x=>{const u=x[4];return `<a class="xc" href="${x[1]}" target="_blank" rel="noopener">
+      <div class="ph">${u?`<span class="fb">${r.emoji}</span><img src="${u}" alt="${x[0]}" loading="lazy" decoding="async" onerror="this.remove()">`:`<span class="fb">${r.emoji}</span>`}</div>
+      <div class="bd"><h4>${x[0]}</h4><p>${x[2]}</p><span class="tip">${x[3]}</span></div></a>`}).join("")}</div>`;
+}
+function renderAll(){renderTop();renderPicker();renderRoute();renderCosts();renderExplore()}
+
+/* ---------- events ---------- */
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-o],[data-t],[data-n],[data-r],[data-x],[data-add],.cost-head");if(!t)return;
+  const ds=t.dataset;
+  if(ds.o) origin=ds.o;
+  else if(ds.t) tier=+ds.t;
+  else if(ds.n) nights[ds.n]=Math.min(6,Math.max(1,nights[ds.n]+ +ds.d));
+  else if(ds.r){sel.has(ds.r)?sel.delete(ds.r):sel.add(ds.r)}
+  else if(ds.x) xtab=ds.x;
+  else if(ds.add){sel.has(ds.add)?sel.delete(ds.add):sel.add(ds.add)}
+  else{const row=t.closest(".cost-row[data-c]");if(!row)return;const c=row.dataset.c;open.has(c)?open.delete(c):open.add(c)}
+  renderAll();
+});
+document.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.matches(".rc")){e.preventDefault();e.target.click()}});
+$("fx").addEventListener("input",renderAll);
+new IntersectionObserver(([en])=>$("dock").classList.toggle("show",!en.isIntersecting)).observe($("top"));
+renderAll();
+</script>
+</body>
+</html>
