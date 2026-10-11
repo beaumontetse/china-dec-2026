@@ -43,15 +43,15 @@ h2{font-size:clamp(32px,5vw,64px);line-height:1.02;margin:0 0 10px;font-weight:9
   radial-gradient(900px 500px at 85% 10%,rgba(56,189,248,.22),transparent 70%),
   radial-gradient(800px 500px at 0% 100%,rgba(245,196,81,.14),transparent 70%)}
 #snow{position:absolute;inset:0;z-index:-1;pointer-events:none;width:100%;height:100%}
-.hero .kicker,.hero h1,.hero .sub,.hero .seg,.hero .tiers,.hero .cmp,.hero .fxrow{opacity:0;transform:translateY(26px);filter:blur(6px);animation:rise .9s cubic-bezier(.2,.8,.2,1) forwards}
-.hero .kicker{animation-delay:.15s}.hero h1{animation-delay:.3s}.hero .sub{animation-delay:.5s}.hero .seg{animation-delay:.65s}.hero .tiers{animation-delay:.8s}.hero .cmp,.hero .fxrow{animation-delay:.95s}
+.hero .kicker,.hero h1,.hero .sub,.hero .seg,.hero .joinrow,.hero .tiers,.hero .cmp,.hero .fxrow{opacity:0;transform:translateY(26px);filter:blur(6px);animation:rise .9s cubic-bezier(.2,.8,.2,1) forwards}
+.hero .kicker{animation-delay:.15s}.hero h1{animation-delay:.3s}.hero .sub{animation-delay:.5s}.hero .seg,.hero .joinrow{animation-delay:.65s}.hero .tiers{animation-delay:.8s}.hero .cmp,.hero .fxrow{animation-delay:.95s}
 @keyframes rise{to{opacity:1;transform:none;filter:none}}
 .hero h1 .hero-zh{font-size:.32em;vertical-align:.9em;opacity:.85;letter-spacing:.08em;color:var(--gold);margin-left:.15em}
 .hero h1{text-shadow:0 6px 40px rgba(0,0,0,.45)}
 .hero .grad{background-image:linear-gradient(90deg,var(--gold),var(--accent),#fff,var(--gold));background-size:300% 100%;animation:shimmer 9s linear infinite;text-shadow:none;filter:drop-shadow(0 6px 30px rgba(56,189,248,.35))}
 @keyframes shimmer{to{background-position:-300% 0}}
 .hero .sub{color:#dbe7f5;text-shadow:0 2px 18px rgba(0,0,0,.5)}
-.hero .seg,.hero .tier,.hero .fxrow input{background:rgba(7,21,38,.45);-webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);border-color:rgba(255,255,255,.18)}
+.hero .seg,.hero .tier,.hero .fxrow input,.hero .joinrow select{background:rgba(7,21,38,.45);-webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);border-color:rgba(255,255,255,.18)}
 .hero .tier{position:relative;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.25)}
 .hero .tier:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.4)}
 .hero .tier:before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.14) 50%,transparent 70%);transform:translateX(-120%);transition:transform .8s}
@@ -80,6 +80,14 @@ h2{font-size:clamp(32px,5vw,64px);line-height:1.02;margin:0 0 10px;font-weight:9
 .tier b{display:block;font-size:clamp(26px,3.6vw,44px);font-weight:900;margin-top:4px;font-variant-numeric:tabular-nums}
 .tier.on{border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}.tier.on b{color:var(--ok)}
 .cmp{margin:14px 0 0;color:var(--muted);font-size:14px}.cmp b{color:#fff}
+.joinrow{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:14px;font-size:14px;color:var(--muted)}
+.joinrow label{font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:800}
+.joinrow select{font:inherit;font-weight:800;color:#fff;padding:9px 14px;border-radius:999px;border:1px solid var(--line);background:var(--glass);cursor:pointer}
+.joinrow select option{color:#000}
+.joinrow.late select{border-color:var(--gold);box-shadow:0 0 24px rgba(245,196,81,.25)}
+.joinrow span{font-size:13px}
+.day.miss{opacity:.38}
+.day .meet{display:inline-block;margin-bottom:8px;font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;padding:4px 9px;border-radius:999px;color:var(--ink);background:var(--gold)}
 .fxrow{margin-top:10px;color:#ffffff80;font-size:13px}
 .fxrow input{width:64px;font:inherit;color:#fff;background:var(--glass);border:1px solid var(--line);border-radius:999px;padding:3px 10px;margin:0 4px}
 
@@ -200,7 +208,7 @@ footer{padding:36px 0 40px;font-size:13px;color:#ffffff80}
   .days{flex-direction:column;overflow:visible}.day{flex:none}
 }
 @media (max-width:700px){.hero-bg{background-position:62% 40%}.hero-shade{background:linear-gradient(180deg,rgba(7,21,38,.75) 0%,rgba(7,21,38,.55) 45%,rgba(7,21,38,.8) 80%,var(--ink) 100%)}.scroll-cue{display:none}}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.hero .kicker,.hero h1,.hero .sub,.hero .seg,.hero .tiers,.hero .cmp,.hero .fxrow,.scroll-cue,.reveal{opacity:1;transform:none;filter:none}.hero-bg{opacity:1;transform:none}#snow{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.hero .kicker,.hero h1,.hero .sub,.hero .seg,.hero .joinrow,.hero .tiers,.hero .cmp,.hero .fxrow,.scroll-cue,.reveal{opacity:1;transform:none;filter:none}.hero-bg{opacity:1;transform:none}#snow{display:none}}
 </style>
 </head>
 <body>
@@ -213,9 +221,10 @@ footer{padding:36px 0 40px;font-size:13px;color:#ffffff80}
   <a class="photo-credit" href="https://commons.wikimedia.org/wiki/File:Piliers_de_gr%C3%A8s_des_monts_Tianzi,_Zhangjiajie_(2026).jpg" target="_blank" rel="noopener">Photo: chensiyuan · CC BY-SA 4.0</a>
   <div class="wrap">
     <p class="kicker" id="kick">Dec 6 – 19, 2026</p>
-    <h1>China<span class="zh hero-zh" lang="zh-Hans">中国</span> <span class="grad">13 days</span></h1>
+    <h1>China<span class="zh hero-zh" lang="zh-Hans">中国</span> <span class="grad" id="ndays">13 days</span></h1>
     <p class="sub">Pick where you're flying from and which regions you're in for. Everything below re-prices live. Per person; Shanghai stays are free.</p>
     <div class="seg" id="origin"></div>
+    <div class="joinrow" id="joinrow"><label for="join">In China</label><select id="join"></select><span id="joinhint"></span></div>
     <div class="tiers" id="tiers"></div>
     <p class="cmp" id="cmp"></p>
     <div class="fxrow">USD → CNY <input id="fx" type="number" step="0.05" value="7.10" inputmode="decimal"> · hotel rooms split 2 ways</div>
@@ -464,6 +473,8 @@ const TIERS=["Budget","Expected","Comfortable"];
 const CITY=Object.fromEntries([["SHA","Shanghai"],...Object.entries(REGIONS).map(([k,r])=>[k,r.name])]);
 const LL=Object.fromEntries([["SHA",SHANGHAI.ll],...Object.entries(REGIONS).map(([k,r])=>[k,r.ll])]);
 let tier=1, origin="SFO", xtab="SHA";
+const FIRST_DAY=7, LAST_DAY=FIRST_DAY+NIGHTS; // land Dec 7, fly home Dec 19
+let join=FIRST_DAY; // day this person lands in China; later = joining part-way through
 const sel=new Set(DEFAULT_REGIONS), nights={}, open=new Set();
 for(const k in REGIONS) nights[k]=REGIONS[k].nights;
 const $=id=>document.getElementById(id);
@@ -503,25 +514,27 @@ function plan(regs){
 }
 function build(regs){
   const D={};Object.keys(COLORS).forEach(c=>D[c]=[]);
-  const o=ORIGINS[origin],P=plan(regs),{codes}=P,n=codes.length;
-  D["Flights & trains"].push([origin+" ⇄ PVG round trip",o.note,"USD",o.p]);
-  const path=["SHA",...codes,"SHA"];
-  if(n) for(let i=0;i<path.length-1;i++){const l=leg(path[i],path[i+1]);
-    D["Flights & trains"].push([CITY[path[i]]+" → "+CITY[path[i+1]],(l.mode==="🚄"?"Bullet train ":"Flight ")+l.time+(l.est?" · estimated":""),"CNY",l.p])}
-  D["Lodging"].push(["Shanghai · "+(n?FIRST_SHANGHAI+P.shaEnd:NIGHTS)+" nights","Friend's place","CNY",[0,0,0]]);
-  for(const k of codes){const r=REGIONS[k],nn=nights[k];
+  const o=ORIGINS[origin],mine=routeStops(regs).stops.filter(s=>s.mine),N=myNights();
+  const away=mine.filter(s=>s.c!=="SHA"&&s.ov>0),n=away.length,sha=mine.filter(s=>s.c==="SHA").reduce((t,s)=>t+s.ov,0);
+  D["Flights & trains"].push([origin+" ⇄ PVG round trip",o.note+(late()?" · land Dec "+join:""),"USD",o.p]);
+  let prev="SHA"; // everyone lands at PVG; a late joiner then heads to wherever the group is
+  for(const s of mine){if(s.c===prev) continue;const l=leg(prev,s.c),first=prev==="SHA"&&late()&&s===mine[0];
+    D["Flights & trains"].push([CITY[prev]+" → "+CITY[s.c],(l.mode==="🚄"?"Bullet train ":"Flight ")+l.time+(l.est?" · estimated":"")+(first?" · to meet the group":""),"CNY",l.p]);prev=s.c}
+  if(sha) D["Lodging"].push(["Shanghai · "+sha+" night"+(sha>1?"s":""),"Friend's place","CNY",[0,0,0]]);
+  for(const st of away){const r=REGIONS[st.c],nn=st.ov;
     D["Lodging"].push([r.name+" · "+nn+" night"+(nn>1?"s":""),"¥"+r.room[0]+"–"+r.room[2]+"/room/night, split "+PEOPLE_PER_ROOM,"CNY",r.room.map(x=>x*nn/PEOPLE_PER_ROOM)]);
     if(r.ski){const d=Math.max(1,nn-.5),dd=Math.ceil(d);
       D["Snowboarding"].push(["Lift tickets · ~"+d+" days","~¥"+r.ski.lift[0]+"–"+r.ski.lift[2]+"/day","CNY",r.ski.lift.map(x=>x*d)],
         ["Board + boots + helmet",dd+" days rental","CNY",r.ski.rent.map(x=>x*dd)],
         ["Jacket / pants rental","Skip if you bring your own","CNY",r.ski.gear],
         ["Hotel ⇄ resort","Taxi / shuttle","CNY",r.ski.ride.map(x=>x*dd)]);}
-    for(const s of r.sights||[]) D["Sights"].push([s[0],s[1],"CNY",s[2]]);}
-  for(const s of SHANGHAI.sights) D["Sights"].push([s[0],s[1],"CNY",s[2]]);
-  D["Food"].push(["Meals · "+NIGHTS+" days","¥150 / ¥250 / ¥400 a day","CNY",[150,250,400].map(x=>x*NIGHTS)]);
+    for(const x of r.sights||[]) D["Sights"].push([x[0],x[1],"CNY",x[2]]);}
+  if(sha) for(const x of SHANGHAI.sights) D["Sights"].push([x[0],x[1],"CNY",x[2]]);
+  D["Food"].push(["Meals · "+N+" days","¥150 / ¥250 / ¥400 a day","CNY",[150,250,400].map(x=>x*N)]);
+  const ski=away.some(s=>s.c==="AAT"||s.c==="HRB");
   D["Getting around & misc"].push(["Metro, DiDi, airport transfers",n?(n+1)+" cities":"Shanghai only","CNY",[250+50*n,460+80*n,700+130*n]],
-    ["China L visa","Required for US passports","USD",[140,140,140]],["eSIM / data","~12 days","USD",[15,25,40]],
-    ["Travel insurance",regs.has("AAT")||regs.has("HRB")?"Covers ski injury at top tier":"","USD",[40,70,120]],["Buffer / souvenirs","","USD",[50,100,250]]);
+    ["China L visa","Required for US passports","USD",[140,140,140]],["eSIM / data","~"+N+" days","USD",[15,25,40]],
+    ["Travel insurance",ski?"Covers ski injury at top tier":"","USD",[40,70,120]],["Buffer / souvenirs","","USD",[50,100,250].map(x=>r10(x*N/NIGHTS))]);
   for(const c in D) if(!D[c].length) delete D[c];
   return D;
 }
@@ -534,7 +547,13 @@ const coverOf=k=>(k==="SHA"?SHANGHAI:REGIONS[k]).explore[0][4];
 
 /* ---------- render ---------- */
 function renderTop(){
-  $("kick").textContent="Dec 6 – 19, 2026 · "+origin+" ⇄ PVG";
+  $("kick").textContent=(late()?`Dec ${join} – 19, 2026 · joining late`:"Dec 6 – 19, 2026")+" · "+origin+" ⇄ PVG";
+  $("ndays").textContent=(LAST_DAY-join+1)+" days";
+  const days=[];for(let d=FIRST_DAY;d<LAST_DAY;d++) days.push(d);
+  $("join").innerHTML=days.map(d=>`<option value="${d}" ${d===join?"selected":""}>${d===FIRST_DAY?"Dec 7 – 19 · whole trip":`Dec ${d} – 19 · ${LAST_DAY-d} night${LAST_DAY-d>1?"s":""}`}</option>`).join("");
+  const at=routeStops().stops.find(s=>s.mine);
+  $("joinrow").className="joinrow"+(late()?" late":"");
+  $("joinhint").textContent=late()?`Joining late? Prices below are just for your part. You'd meet the group in ${CITY[at.c]}.`:"Joining part-way? Pick the day you land.";
   $("origin").innerHTML=Object.entries(ORIGINS).map(([k,o])=>`<button class="${k===origin?"on":""}" data-o="${k}">From ${k}<small>${o.city}</small></button>`).join("");
   $("tiers").innerHTML=TIERS.map((n,i)=>`<button class="tier ${i===tier?"on":""}" data-t="${i}"><small>${n}</small><b>${fmt(total(sel,i))}</b></button>`).join("");
   const other=origin==="SFO"?"JFK":"SFO",d=ORIGINS[other].p[tier]-ORIGINS[origin].p[tier];
@@ -555,18 +574,22 @@ function renderPicker(){
   const w=$("warn");w.className="warn"+(P.over?" show":"");
   w.textContent=P.over?`That's ${P.away} nights away but there are only ${cap} between Dec 9 and Dec 19. Drop a region or trim nights; as is, the trip runs ${P.over} night${P.over>1?"s":""} past Dec 19.`:"";
 }
-function routeStops(){
-  const P=plan(sel),{codes}=P;
+function routeStops(regs=sel){
+  const P=plan(regs),{codes}=P;
   const stops=[{c:"SHA",n:codes.length?FIRST_SHANGHAI:NIGHTS,d:codes.length?"SFO and JFK crews meet at PVG":"Base camp the whole trip; day trips to Hangzhou or Suzhou"}];
   codes.forEach(k=>stops.push({c:k,n:nights[k],d:REGIONS[k].blurb,ski:!!REGIONS[k].ski}));
   if(codes.length) stops.push({c:"SHA",n:P.shaEnd,d:P.shaEnd?"Free bed, Bund, last dinners":"Straight to the airport",home:1});
-  let day=7,prev=null;
-  for(const s of stops){s.a=day;day+=s.n;s.b=day;s.leg=prev?leg(prev,s.c):null;prev=s.c}
+  let day=FIRST_DAY,prev=null;
+  for(const s of stops){s.a=day;day+=s.n;s.b=day;s.leg=prev?leg(prev,s.c):null;prev=s.c;
+    s.ov=Math.max(0,s.b-Math.max(s.a,join)); // nights this person is there
+    s.mine=s.b>join||(s.n===0&&s.a>=join)}
   return{stops,end:day};
 }
+const late=()=>join>FIRST_DAY;
+const myNights=()=>LAST_DAY-join;
 function renderRoute(){
-  const{stops,end}=routeStops();
-  $("days").innerHTML=stops.map(s=>`<div class="day ${s.ski?"ski":""} ${s.home?"home":""}"><div class="dow">${s.n?`Dec ${s.a} – ${s.b}`:`Dec ${s.a}`} · ${s.n}n</div><div class="dt">${CITY[s.c]}${zh(CITY[s.c])}${s.ski?" 🏂":""}</div><div class="ds">${s.d}</div>${s.leg?`<span class="how">${s.leg.mode} ${s.leg.time}</span>`:""}</div>`).join("")
+  const{stops,end}=routeStops(),meet=late()?stops.find(s=>s.mine):null;
+  $("days").innerHTML=stops.map(s=>`<div class="day ${s.ski?"ski":""} ${s.home?"home":""} ${s.mine?"":"miss"}">${s===meet?`<span class="meet">You join Dec ${join}</span>`:""}${!s.mine?`<span class="meet" style="background:#ffffff26;color:#fff">Before you join</span>`:""}<div class="dow">${s.n?`Dec ${s.a} – ${s.b}`:`Dec ${s.a}`} · ${s.n}n</div><div class="dt">${CITY[s.c]}${zh(CITY[s.c])}${s.ski?" 🏂":""}</div><div class="ds">${s.d}</div>${s.leg?`<span class="how">${s.leg.mode} ${s.leg.time}</span>`:""}</div>`).join("")
     +`<div class="day home"><div class="dow">Dec ${end}</div><div class="dt">Fly home ✈</div><div class="ds">PVG → ${origin}</div></div>`;
   $("routeh").textContent=stops.length===1?"Shanghai, all in":stops.length+" stops, one loop";
 }
@@ -585,7 +608,7 @@ function renderCosts(){
   const P=plan(sel);
   $("dt").textContent=fmt(all);
   $("ds").className="s"+(P.over?" over":"");
-  $("ds").textContent=`${TIERS[tier]} · from ${origin} · `+(P.codes.length?P.codes.map(k=>REGIONS[k].name.split(" ")[0]).join(" → "):"Shanghai only")+(P.over?` · ${P.over} nights over`:"");
+  $("ds").textContent=(late()?`Joining Dec ${join} · `:"")+`${TIERS[tier]} · from ${origin} · `+(P.codes.length?P.codes.map(k=>REGIONS[k].name.split(" ")[0]).join(" → "):"Shanghai only")+(P.over?` · ${P.over} nights over`:"");
 }
 function renderExplore(){
   const keys=["SHA",...Object.keys(REGIONS)];
@@ -601,10 +624,11 @@ function renderAll(){renderTop();renderPicker();renderRoute();renderCosts();rend
 
 /* ---------- export / share ---------- */
 // Plan lives in the URL hash, e.g. #plan=SFO_1_ZJJ2-CKG2-AAT3_7.1 (origin_tier_regions+nights_fx)
-const planHash=()=>"#plan="+[origin,tier,plan(sel).codes.map(k=>k+nights[k]).join("-"),fxr()].join("_");
+const planHash=()=>"#plan="+[origin,tier,plan(sel).codes.map(k=>k+nights[k]).join("-"),fxr()].join("_")+(late()?"_j"+join:"");
 const shareURL=()=>location.href.split("#")[0]+planHash();
 function loadHash(){
-  const m=location.hash.match(/^#plan=(\w+)_(\d)_([\w-]*)_([\d.]+)$/);if(!m) return;
+  const m=location.hash.match(/^#plan=(\w+)_(\d)_([\w-]*)_([\d.]+)(?:_j(\d+))?$/);if(!m) return;
+  if(m[5]&&+m[5]>FIRST_DAY&&+m[5]<LAST_DAY) join=+m[5];
   if(ORIGINS[m[1]]) origin=m[1];
   tier=Math.min(2,+m[2]);
   sel.clear();
@@ -615,10 +639,12 @@ const zhTxt=n=>ZH[n]?" "+ZH[n]:"";
 function planText(){
   const D=build(sel),{all,cats}=totals(D,tier),{stops,end}=routeStops(),P=plan(sel),L=[];
   L.push("CHINA 中国 · Dec 6–19, 2026","From "+origin+" · "+TIERS[tier]+" tier · "+fmt(all)+" per person");
+  if(late()){const at=stops.find(s=>s.mine);L.push(`Joining late: in China Dec ${join}–19 (${myNights()} nights), meeting the group in ${CITY[at.c]}${zhTxt(CITY[at.c])}`)}
   if(P.over) L.push("⚠ "+P.over+" night"+(P.over>1?"s":"")+" over the Dec 19 end date");
   L.push("","ROUTE");
-  for(const s of stops){const nm=CITY[s.c];
-    L.push(`${s.n?`Dec ${s.a}–${s.b}`:`Dec ${s.a}`}  ${nm}${zhTxt(nm)}${s.n?` · ${s.n} night${s.n>1?"s":""}`:""}${s.leg?` (${s.leg.mode==="🚄"?"train":"flight"} ${s.leg.time})`:""}`);}
+  for(const s of stops){const nm=CITY[s.c],a=Math.max(s.a,join),n=s.n?s.ov:0;
+    if(!s.mine){L.push(`(Dec ${s.a}–${s.b}  ${nm} · group only, before you join)`);continue}
+    L.push(`${n?`Dec ${a}–${s.b}`:`Dec ${a}`}  ${nm}${zhTxt(nm)}${n?` · ${n} night${n>1?"s":""}`:""}${s.leg&&s.a>=join?` (${s.leg.mode==="🚄"?"train":"flight"} ${s.leg.time})`:""}`);}
   L.push(`Dec ${end}  Fly home PVG → ${origin}`,"","COSTS (per person, "+TIERS[tier]+")");
   for(const c in D){L.push(`${c}: ${fmt(cats[c])}`);for(const i of D[c]) L.push(`  · ${i[0]}: ${fmt(usd(i,tier))}`)}
   L.push("",`TOTAL: ${fmt(all)} per person (USD → CNY ${fxr()})`,"","Open this exact plan:",shareURL());
@@ -657,6 +683,7 @@ document.addEventListener("click",e=>{
 });
 document.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.matches(".rc")){e.preventDefault();e.target.click()}});
 $("fx").addEventListener("input",renderAll);
+$("join").addEventListener("change",e=>{join=+e.target.value;renderAll()});
 new IntersectionObserver(([en])=>$("dock").classList.toggle("show",!en.isIntersecting)).observe($("top"));
 loadHash();
 renderAll();
