@@ -523,9 +523,9 @@ function build(regs){
   if(sha) D["Lodging"].push(["Shanghai · "+sha+" night"+(sha>1?"s":""),"Friend's place","CNY",[0,0,0]]);
   for(const st of away){const r=REGIONS[st.c],nn=st.ov;
     D["Lodging"].push([r.name+" · "+nn+" night"+(nn>1?"s":""),"¥"+r.room[0]+"–"+r.room[2]+"/room/night, split "+PEOPLE_PER_ROOM,"CNY",r.room.map(x=>x*nn/PEOPLE_PER_ROOM)]);
-    if(r.ski){const d=Math.max(1,nn-.5),dd=Math.ceil(d);
-      D["Snowboarding"].push(["Lift tickets · ~"+d+" days","~¥"+r.ski.lift[0]+"–"+r.ski.lift[2]+"/day","CNY",r.ski.lift.map(x=>x*d)],
-        ["Board + boots + helmet",dd+" days rental","CNY",r.ski.rent.map(x=>x*dd)],
+    if(r.ski){const dd=nn; // whole-day tickets: one ski day per night there
+      D["Snowboarding"].push(["Lift tickets · "+dd+" day"+(dd>1?"s":""),"~¥"+r.ski.lift[0]+"–"+r.ski.lift[2]+"/day","CNY",r.ski.lift.map(x=>x*dd)],
+        ["Board + boots + helmet",dd+" day"+(dd>1?"s":"")+" rental","CNY",r.ski.rent.map(x=>x*dd)],
         ["Jacket / pants rental","Skip if you bring your own","CNY",r.ski.gear],
         ["Hotel ⇄ resort","Taxi / shuttle","CNY",r.ski.ride.map(x=>x*dd)]);}
     for(const x of r.sights||[]) D["Sights"].push([x[0],x[1],"CNY",x[2]]);}
